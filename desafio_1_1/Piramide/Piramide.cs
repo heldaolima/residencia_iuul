@@ -1,4 +1,4 @@
-﻿namespace DesafiosCSharp.Piramide;
+﻿namespace DesafiosCSharp.Projeto_1;
 public class Piramide
 {
   public int N;

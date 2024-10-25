@@ -1,5 +1,5 @@
 namespace Piramide.Tests;
-using DesafiosCSharp.Piramide;
+using DesafiosCSharp.Projeto_1;
 
 public class Piramide_Should
 {
