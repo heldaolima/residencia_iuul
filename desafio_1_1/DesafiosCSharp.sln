@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vertice", "Vertice\Vertice.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vertice.Tests", "Vertice.Tests\Vertice.Tests.csproj", "{71311C08-8FC1-4105-82F8-2C18DAAC10FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triangulo", "Triangulo\Triangulo.csproj", "{6556FEB7-FDBC-4045-8E15-6F04546383BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Triangulo.Tests", "Triangulo.Tests\Triangulo.Tests.csproj", "{FDAC348F-6364-43B4-ACEA-1FA64402885E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{71311C08-8FC1-4105-82F8-2C18DAAC10FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71311C08-8FC1-4105-82F8-2C18DAAC10FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71311C08-8FC1-4105-82F8-2C18DAAC10FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6556FEB7-FDBC-4045-8E15-6F04546383BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6556FEB7-FDBC-4045-8E15-6F04546383BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6556FEB7-FDBC-4045-8E15-6F04546383BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6556FEB7-FDBC-4045-8E15-6F04546383BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDAC348F-6364-43B4-ACEA-1FA64402885E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDAC348F-6364-43B4-ACEA-1FA64402885E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDAC348F-6364-43B4-ACEA-1FA64402885E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDAC348F-6364-43B4-ACEA-1FA64402885E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

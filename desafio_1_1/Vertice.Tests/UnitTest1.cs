@@ -1,5 +1,5 @@
 namespace Vertice.Tests;
-using DesafiosCSharp.Projeto_1;
+using DesafiosCSharp.Projeto_2;
 
 public class Vertice_Should
 {
@@ -40,6 +40,7 @@ public class Vertice_Should
 
         double x = random.NextDouble();
         double y = random.NextDouble();
+
         Vertice v1 = new Vertice(x, y);
         Vertice v2 = new Vertice(x, y);
 

@@ -1,4 +1,4 @@
-﻿namespace DesafiosCSharp.Projeto_1;
+﻿namespace DesafiosCSharp.Projeto_2;
 
 public class Vertice
 {
