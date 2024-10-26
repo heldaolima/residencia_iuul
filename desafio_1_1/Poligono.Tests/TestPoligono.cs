@@ -3,7 +3,7 @@ namespace Poligono.Tests;
 using DesafiosCSharp.Projeto_4;
 using DesafiosCSharp.Projeto_2;
 
-public class UnitTest1
+public class TestPoligono
 {
     private void AddVertices(Vertice[] vertices, int qtd)
     {

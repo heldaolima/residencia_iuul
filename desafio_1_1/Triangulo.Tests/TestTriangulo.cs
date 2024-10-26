@@ -84,7 +84,8 @@ public class TestTriangulo
     }
 
     [Fact]
-    public void TestReferenceEquality() {
+    public void TestReferenceEquality()
+    {
         Vertice a = new Vertice(0.0, 0.0);
         Vertice b = new Vertice(3.0, 0.0);
         Vertice c = new Vertice(0.0, 4.0);

@@ -1,7 +1,7 @@
 namespace Vertice.Tests;
 using DesafiosCSharp.Projeto_2;
 
-public class Vertice_Should
+public class TestVertice
 {
     [Fact]
     public void TestMove()
