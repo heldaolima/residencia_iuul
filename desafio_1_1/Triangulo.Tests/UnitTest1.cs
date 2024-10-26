@@ -68,4 +68,31 @@ public class TestTriangulo
         Triangulo triangulo = new Triangulo(a, b, c);
         Assert.Equal(6.00, triangulo.Area, 2);
     }
+
+    [Fact]
+    public void TestValueEquality()
+    {
+        Vertice a = new Vertice(0.0, 0.0);
+        Vertice b = new Vertice(3.0, 0.0);
+        Vertice c = new Vertice(0.0, 4.0);
+
+        Triangulo t1 = new Triangulo(a, b, c);
+        Triangulo t2 = new Triangulo(a, b, c);
+
+        Assert.True(t1 == t2);
+        Assert.False(t1 != t2);
+    }
+
+    [Fact]
+    public void TestReferenceEquality() {
+        Vertice a = new Vertice(0.0, 0.0);
+        Vertice b = new Vertice(3.0, 0.0);
+        Vertice c = new Vertice(0.0, 4.0);
+
+        Triangulo t1 = new Triangulo(a, b, c);
+        Triangulo copy = t1;
+
+        Assert.True(t1 == copy);
+        Assert.False(t1 != copy);
+    }
 }

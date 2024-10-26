@@ -39,10 +39,18 @@ public class Vertice
     return !(v1 == v2);
   }
 
-  public override bool Equals(object? obj) => obj is Vertice && Equals(obj as Vertice);
+  public override bool Equals(object? obj)
+  {
+    if (obj is Vertice vertice)
+    {
+      return _X == vertice.X && _Y == vertice.Y;
+    }
+
+    return false;
+  }
 
   public override int GetHashCode()
   {
-    return _X.GetHashCode() ^ _Y.GetHashCode();
+    return HashCode.Combine(_X, _Y);
   }
 }

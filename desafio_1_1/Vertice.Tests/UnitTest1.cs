@@ -58,5 +58,8 @@ public class Vertice_Should
 
         Assert.True(v1 != v2);
         Assert.False(v1 == v2);
+
+        Vertice v1Ref = v1;
+        Assert.True(v1Ref == v1);
     }
 }
