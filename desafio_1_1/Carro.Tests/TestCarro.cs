@@ -38,4 +38,15 @@ public class TestCarro
         Assert.Throws<InvalidOperationException>(() => cA.Motor = mB);
         Assert.Throws<InvalidOperationException>(() => cB.Motor = mA);
     }
+
+    [Fact]
+    public void TestSwitchMotors()
+    {
+        Motor mA = new Motor(1.0);
+        Carro carro = new Carro("Placa", "Modelo", mA);
+
+        Motor mB = new Motor(2.0);
+        carro.Motor = mB;
+        Assert.Equal(mB, carro.Motor);
+    }
 }
