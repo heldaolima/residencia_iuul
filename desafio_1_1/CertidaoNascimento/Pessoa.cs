@@ -9,6 +9,7 @@ public class Pessoa
   public Pessoa(String nome)
   {
     this.Nome = nome;
+    this.certidao = null;
   }
 
   public void SetCertidao(CertidaoNascimento certidao)
