@@ -17,10 +17,10 @@ public class Carro
   {
     Placa = placa;
     Modelo = modelo;
-    SetMotor(motor);
+    Motor = motor;
   }
 
-  public void SetMotor(Motor motor)
+  private void SetMotor(Motor motor)
   {
     motor.AssociarCarro(this);
 

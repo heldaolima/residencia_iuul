@@ -35,7 +35,7 @@ public class TestCarro
         Carro cA = new Carro("Placa", "Modelo", mA);
         Carro cB = new Carro("Placa", "Modelo", mB);
 
-        Assert.Throws<InvalidOperationException>(() => cA.SetMotor(mB));
+        Assert.Throws<InvalidOperationException>(() => cA.Motor = mB);
         Assert.Throws<InvalidOperationException>(() => cB.Motor = mA);
     }
 }
