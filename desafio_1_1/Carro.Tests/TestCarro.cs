@@ -33,10 +33,18 @@ public class TestCarro
         Motor mB = new Motor(2.0);
 
         Carro cA = new Carro("Placa", "Modelo", mA);
-        Carro cB = new Carro("Placa", "Modelo", mB);
+        Assert.Equal(cA, mA.CarroAssociado);
+        Assert.Equal(mA, cA.Motor);
 
-        Assert.Throws<InvalidOperationException>(() => cA.Motor = mB);
-        Assert.Throws<InvalidOperationException>(() => cB.Motor = mA);
+        Carro cB = new Carro("Placa", "Modelo", mB);
+        Assert.Equal(cB, mB.CarroAssociado);
+        Assert.Equal(mB, cB.Motor);
+
+        Assert.Throws<InvalidOperationException>(() => cA.TrocarMotor(mB));
+        Assert.Equal(mA, cA.Motor);
+
+        Assert.Throws<InvalidOperationException>(() => cB.TrocarMotor(mA));
+        Assert.Equal(mB, cB.Motor);
     }
 
     [Fact]
@@ -46,7 +54,9 @@ public class TestCarro
         Carro carro = new Carro("Placa", "Modelo", mA);
 
         Motor mB = new Motor(2.0);
-        carro.Motor = mB;
+        carro.TrocarMotor(mB);
+
         Assert.Equal(mB, carro.Motor);
+        Assert.Null(mA.CarroAssociado);
     }
 }

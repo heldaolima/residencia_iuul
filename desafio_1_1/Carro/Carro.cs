@@ -10,13 +10,20 @@ public class Carro
   public Motor Motor
   {
     get => motor;
-    set => SetMotor(value);
+    private set => SetMotor(value);
   }
 
   public Carro(String placa, String modelo, Motor motor)
   {
     Placa = placa;
     Modelo = modelo;
+    Motor = motor;
+  }
+
+  public void TrocarMotor(Motor motor)
+  {
+    motor.VerificarCarro(this);
+    this.motor.DesassociarCarro();
     Motor = motor;
   }
 

@@ -11,12 +11,22 @@ public class Motor
     CarroAssociado = null;
   }
 
-  public void AssociarCarro(Carro carro)
+  public void VerificarCarro(Carro carro)
   {
     if (CarroAssociado != null && CarroAssociado != carro)
     {
       throw new InvalidOperationException("O motor já está associado a um carro.");
     }
+  }
+
+  public void AssociarCarro(Carro carro)
+  {
+    VerificarCarro(carro);
     CarroAssociado = carro;
+  }
+
+  public void DesassociarCarro()
+  {
+    CarroAssociado = null;
   }
 }
