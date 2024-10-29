@@ -34,11 +34,10 @@ public class Carro
     this.motor = motor;
     VelocidadeMaxima = this.motor.Cilindrada switch
     {
-      (<= 1.0) => 140,
-      (> 1.0) and (<= 1.6) => 160,
-      (> 1.6) and (<= 2.0) => 180,
-      (> 2.0) => 220,
-      _ => 0,
+      <= 1.0 => 140,
+      > 1.0 and <= 1.6 => 160,
+      > 1.6 and <= 2.0 => 180,
+      _ => 220,
     };
   }
 }
