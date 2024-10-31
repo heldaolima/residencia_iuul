@@ -3,7 +3,7 @@
 public class CertidaoNascimento
 {
   private DateTime DataEmissao { get; }
-  public Pessoa _Pessoa { get; }
+  public Pessoa _Pessoa { get; private set; }
 
   public CertidaoNascimento(DateTime data, Pessoa pessoa)
   {

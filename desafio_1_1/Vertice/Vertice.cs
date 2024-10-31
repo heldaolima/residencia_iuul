@@ -43,7 +43,7 @@ public class Vertice
   {
     if (obj is Vertice vertice)
     {
-      return _X == vertice.X && _Y == vertice.Y;
+      return vertice == this;
     }
 
     return false;

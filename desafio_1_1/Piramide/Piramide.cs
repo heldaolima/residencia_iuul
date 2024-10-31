@@ -1,7 +1,8 @@
 ﻿namespace DesafiosCSharp.Projeto_1;
+
 public class Piramide
 {
-  public int N;
+  public int N { get; private set; }
   public Piramide(int _N)
   {
     if (_N < 1)
