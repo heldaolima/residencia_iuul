@@ -95,7 +95,9 @@ Func<String, (DateTime, bool)> ParseBirthDate = (value) =>
   {
     DateTime dataNascimento =
       DateTime.ParseExact(value, "dd/MM/yyyy", new CultureInfo("pt-BR"));
-    return (dataNascimento, true);
+
+    DateTime eighteenYearsAgo = DateTime.Today.AddYears(-18);
+    return (dataNascimento, dataNascimento <= eighteenYearsAgo);
   }
   catch (FormatException)
   {
@@ -104,7 +106,7 @@ Func<String, (DateTime, bool)> ParseBirthDate = (value) =>
 };
 
 DateTime dataNascimento = ReadFromUser<DateTime>(
-    "Insira a data de nascimento [DD/MM/AAAA]: ",
+    "Insira a data de nascimento [DD/MM/AAAA] (é necessário ter no mínimo 18 anos): ",
     "Erro: a data de nascimento deve ser no formato [DD/MM/AAAA]",
     ParseBirthDate
   );
@@ -114,6 +116,7 @@ Func<String, (float, bool)> ParseIncome = (value) =>
 {
   try
   {
+    // TODO: Verificar que a string tenha uma vírgula e apenas duas casas decimais
     float income = float.Parse(value, new CultureInfo("pt-BR"));
     if (income < 0)
     {
