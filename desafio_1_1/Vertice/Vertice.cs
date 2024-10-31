@@ -1,6 +1,6 @@
 ﻿namespace DesafiosCSharp.Projeto_2;
 
-public class Vertice
+public class Vertice : IEquatable<Vertice>
 {
   private double _X, _Y;
 
@@ -26,12 +26,15 @@ public class Vertice
     _Y = y;
   }
 
-  public static bool operator ==(Vertice v1, Vertice v2)
+  public static bool operator ==(Vertice a, Vertice b)
   {
-    if (ReferenceEquals(v1, v2))
+    if (ReferenceEquals(a, b))
       return true;
 
-    return v1.X == v2.X && v1.Y == v2.Y;
+    if (a is null || b is null)
+      return false;
+
+    return a.Equals(b);
   }
 
   public static bool operator !=(Vertice v1, Vertice v2)
@@ -43,10 +46,17 @@ public class Vertice
   {
     if (obj is Vertice vertice)
     {
-      return vertice == this;
+      return Equals(vertice);
     }
 
     return false;
+  }
+
+  public bool Equals(Vertice? other)
+  {
+    if (other is null) return false;
+
+    return _X == other.X && _Y == other.Y;
   }
 
   public override int GetHashCode()

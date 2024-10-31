@@ -1,6 +1,6 @@
 ﻿namespace DesafiosCSharp.Projeto_5;
 
-public class Intervalo
+public class Intervalo : IEquatable<Intervalo>
 {
   private DateTime inicial, final;
   public Intervalo(DateTime inicial, DateTime final)
@@ -28,7 +28,10 @@ public class Intervalo
     if (ReferenceEquals(a, b))
       return true;
 
-    return a.inicial == b.inicial && a.final == b.final;
+    if (a is null || b is null)
+      return false;
+
+    return a.Equals(b);
   }
 
   public static bool operator !=(Intervalo a, Intervalo b)
@@ -45,9 +48,16 @@ public class Intervalo
   {
     if (obj is Intervalo i)
     {
-      return inicial == i.inicial && final == i.final;
+      return Equals(i);
     }
 
     return false;
+  }
+
+  public bool Equals(Intervalo? other)
+  {
+    if (other is null) return false;
+
+    return inicial == other.inicial && final == other.final;
   }
 }

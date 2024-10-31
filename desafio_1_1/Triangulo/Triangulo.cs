@@ -66,12 +66,15 @@ public class Triangulo
   public double Perimetro => perimetro;
   public double Area => CalcularArea();
 
-  public static bool operator ==(Triangulo t1, Triangulo t2)
+  public static bool operator ==(Triangulo a, Triangulo b)
   {
-    if (ReferenceEquals(t1, t2))
+    if (ReferenceEquals(a, b))
       return true;
 
-    return t1.A == t2.A && t1.B == t2.B && t2.C == t2.C;
+    if (a is null || b is null)
+      return false;
+
+    return a.Equals(b);
   }
 
   public static bool operator !=(Triangulo t1, Triangulo t2)
@@ -88,9 +91,16 @@ public class Triangulo
   {
     if (obj is Triangulo t)
     {
-      return a == t.A && b == t.B && c == t.C;
+      return Equals(t);
     }
 
     return false;
+  }
+
+  public bool Equals(Triangulo? other)
+  {
+    if (other is null) return false;
+
+    return A == other.A && B == other.B && C == other.C;
   }
 }
