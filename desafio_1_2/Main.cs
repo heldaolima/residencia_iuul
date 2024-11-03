@@ -1,5 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-namespace DentalOffice;
+﻿namespace DentalOffice;
 using DentalOffice.Presentation;
 
 class App
@@ -7,18 +6,22 @@ class App
   public static void Main()
   {
     var mainMenu = new MainMenu();
-    var agendaMenu = new AgendaMenu();
     var patientRegistrationMenu = new PatientRegistrationMenu();
+    var agendaMenu = new AgendaMenu();
+
 
     Menu currentMenu = mainMenu;
     while (true)
     {
-      int opt = currentMenu.Display();
-      Console.WriteLine($"Opção: {opt}");
-      if (opt == -1)
-      {
+      var action = currentMenu.Display();
+      if (action == Menu.MenuOptions.DisplayPatientsMenu)
+        currentMenu = patientRegistrationMenu;
+      else if (action == Menu.MenuOptions.DisplayAgendaMenu)
+        currentMenu = agendaMenu;
+      else if (action == Menu.MenuOptions.Terminate)
         break;
-      }
+      else if (action == Menu.MenuOptions.ShowAgain)
+        continue;
     }
   }
 }
