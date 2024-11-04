@@ -1,22 +1,22 @@
-namespace DentalOffice.Validators;
+namespace DentalOffice.Validation.Validators;
 
 public class CPFValidator : Validator<String>
 {
-  public (String, bool) Validate(String value)
+  private bool IsVerifierValid(int verifier, int remainder)
   {
-    bool IsVerifierValid(int verifier, int remainder)
-    {
-      if (remainder == 0 || remainder == 1)
-        return verifier == 0;
-      return verifier == 11 - remainder;
-    }
+    if (remainder == 0 || remainder == 1)
+      return verifier == 0;
+    return verifier == 11 - remainder;
+  }
 
+  public bool Validate(String value)
+  {
     if (
         value.Length != 11 ||
         value.Distinct().Count() == 1 ||
         !value.All((c) => char.IsDigit(c))
       )
-      return (value, false);
+      return false;
 
     int[] cpfNums = value.Select((c) => int.Parse(c.ToString())).ToArray();
 
@@ -33,7 +33,7 @@ public class CPFValidator : Validator<String>
 
     int remainder = sum % 11;
     if (!IsVerifierValid(firstVerifier, remainder))
-      return (value, false);
+      return false;
 
     mult = 11;
     sum = 0;
@@ -45,8 +45,8 @@ public class CPFValidator : Validator<String>
 
     remainder = sum % 11;
     if (!IsVerifierValid(secondVerifier, remainder))
-      return (value, false);
+      return false;
 
-    return (value, true);
+    return true;
   }
 }

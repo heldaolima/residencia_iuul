@@ -1,9 +1,8 @@
-namespace DentalOffice.Validators;
+namespace DentalOffice.Validation.Parsers;
 
-public class HourOfTheDayValidator : Validator<TimeSpan>
+public class HourOfTheDayParser : Parser<TimeSpan>
 {
-
-  public (TimeSpan, bool) Validate(String value)
+  public (TimeSpan, bool) Parse(String value)
   {
     if (value.Length != 4)
       return (TimeSpan.Zero, false);

@@ -14,4 +14,7 @@ public class Patient
     BirthDate = birthDate;
     consultations = new List<Consultation>();
   }
+
+  public override String ToString() =>
+    $"{Name} | ${CPF} | {BirthDate}";
 }

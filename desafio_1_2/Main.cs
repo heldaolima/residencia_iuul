@@ -1,5 +1,6 @@
 ﻿namespace DentalOffice;
-using DentalOffice.Presentation;
+using DentalOffice.Presentation.StaticMenus;
+using DentalOffice.Presentation.FactoryMenus;
 
 class App
 {
@@ -9,7 +10,6 @@ class App
     var patientRegistrationMenu = new PatientRegistrationMenu();
     var agendaMenu = new AgendaMenu();
 
-
     Menu currentMenu = mainMenu;
     while (true)
     {
@@ -18,6 +18,8 @@ class App
         currentMenu = patientRegistrationMenu;
       else if (action == Menu.MenuOptions.DisplayAgendaMenu)
         currentMenu = agendaMenu;
+      else if (action == Menu.MenuOptions.DisplayRegisterPatientMenu)
+        action = CreatePatient.Create();
       else if (action == Menu.MenuOptions.Terminate)
         break;
       else if (action == Menu.MenuOptions.ShowAgain)

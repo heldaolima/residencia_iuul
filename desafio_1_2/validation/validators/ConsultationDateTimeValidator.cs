@@ -1,13 +1,14 @@
-namespace DentalOffice.Validators;
+namespace DentalOffice.Validation.Validators;
 
 using DentalOffice;
 
 public class ConsultationDateTimeValidator : Validator<TimeInterval>
 {
-  public (TimeInterval, bool) Validate(String value)
+  public bool Validate(TimeInterval value)
   {
     DateTime today = DateTime.Today;
-    today.Hour = 1;
+    /*today.Hour = 1;*/
+    return true;
 
   }
 

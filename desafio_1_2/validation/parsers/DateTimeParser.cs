@@ -1,9 +1,10 @@
-namespace DentalOffice.Validators;
+namespace DentalOffice.Validation.Parsers;
+
 using System.Globalization;
 
-public class DateTimeValidator : Validator<DateTime>
+public class DateTimeParser : Parser<DateTime>
 {
-  public (DateTime, bool) Validate(String value)
+  public (DateTime, bool) Parse(String value)
   {
     try
     {

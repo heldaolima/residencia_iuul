@@ -1,15 +1,18 @@
 namespace DentalOffice.Presentation.FactoryMenus;
 
 using DentalOffice.Presentation.StaticMenus;
-using DentalOffice.Validators;
+using DentalOffice.Validation;
+using DentalOffice.Validation.Validators;
+using DentalOffice.Validation.Parsers;
 
 public class CreateConsultationMenu
 {
     public static Menu.MenuOptions Create()
     {
-        String patientCpf = InputValidator.ValidateInput(
+        var patientCpf = InputValidator.ValidateInput(
                 "Insira o CPF do paciente: ",
                 "Erro: CPF inválido.",
+                new StringParser(),
                 new CPFValidator()
                 );
 
@@ -22,19 +25,22 @@ public class CreateConsultationMenu
         DateTime date = InputValidator.ValidateInput(
                 "Insira a data da consulta [DDMMAAAA]: ",
                 "Erro: data inserida inválida.",
+                new DateTimeParser(),
                 new BirthDateValidator()
                 );
 
         TimeSpan startHour = InputValidator.ValidateInput(
                 "Insira a hora de início da consulta [HHMM]: ",
                 "Erro: a hora inserida é inválida.",
-                new HourOfTheDayValidator()
+                new HourOfTheDayParser(),
+                new StartHourValidator()
                 );
 
         TimeSpan endHour = InputValidator.ValidateInput(
                 "Insira a hora de fim da consulta [HHMM]: ",
                 "Erro: a hora inserida é inválida.",
-                new HourOfTheDayValidator()
+                new HourOfTheDayParser(),
+                new FinalHourValidator(startHour)
                 );
 
         var startDate = date.Date.Add(startHour);
