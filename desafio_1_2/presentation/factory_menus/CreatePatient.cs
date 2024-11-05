@@ -11,21 +11,28 @@ public class CreatePatient
     {
         String name = InputValidator.ValidateInput(
             "Insira o nome do paciente: ",
-            "Erro: o nome deve ter no mínimo 5 letras.",
             new StringParser(),
             new NameValidator()
           );
 
-        String cpf = InputValidator.ValidateInput(
-            "Insira o CPF do paciente (apenas números): ",
-            "Erro: CPF inválido.",
-            new StringParser(),
-            new CPFValidator()
-          );
+        String cpf;
+        while (true)
+        {
+            cpf = InputValidator.ValidateInput(
+                    "Insira o CPF do paciente (apenas números): ",
+                    new StringParser(),
+                    new CPFValidator()
+                    );
+            if (Registration.GetRegistration().IsCpfRegistered(cpf))
+            {
+                Console.WriteLine("Erro: O CPF inserido já foi registrado.");
+                continue;
+            }
+            break;
+        }
 
         DateTime birthDate = InputValidator.ValidateInput(
             "Insira a data de nascimento [DDMMAAAA] (é necessário ter no mínimo 13 anos): ",
-            "Erro: data de nascimento inválida.",
             new DateTimeParser(),
             new BirthDateValidator()
           );

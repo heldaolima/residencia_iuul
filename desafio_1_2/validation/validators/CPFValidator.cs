@@ -2,6 +2,8 @@ namespace DentalOffice.Validation.Validators;
 
 public class CPFValidator : Validator<String>
 {
+  private const String invalidCpfError = "Erro: O CPF inserido está no formato inválido.";
+
   private bool IsVerifierValid(int verifier, int remainder)
   {
     if (remainder == 0 || remainder == 1)
@@ -9,14 +11,14 @@ public class CPFValidator : Validator<String>
     return verifier == 11 - remainder;
   }
 
-  public bool Validate(String value)
+  public String? Validate(String value)
   {
     if (
         value.Length != 11 ||
         value.Distinct().Count() == 1 ||
         !value.All((c) => char.IsDigit(c))
       )
-      return false;
+      return invalidCpfError;
 
     int[] cpfNums = value.Select((c) => int.Parse(c.ToString())).ToArray();
 
@@ -33,7 +35,7 @@ public class CPFValidator : Validator<String>
 
     int remainder = sum % 11;
     if (!IsVerifierValid(firstVerifier, remainder))
-      return false;
+      return invalidCpfError;
 
     mult = 11;
     sum = 0;
@@ -45,8 +47,8 @@ public class CPFValidator : Validator<String>
 
     remainder = sum % 11;
     if (!IsVerifierValid(secondVerifier, remainder))
-      return false;
+      return invalidCpfError;
 
-    return true;
+    return null;
   }
 }

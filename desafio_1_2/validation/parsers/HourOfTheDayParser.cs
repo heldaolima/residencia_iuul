@@ -22,4 +22,6 @@ public class HourOfTheDayParser : Parser<TimeSpan>
 
     return (new TimeSpan(hours, minutes, 0), true);
   }
+
+  public String ParseError() => "Entrada inválida para horário.";
 }

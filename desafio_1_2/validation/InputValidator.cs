@@ -5,7 +5,7 @@ using DentalOffice.Validation.Validators;
 
 public class InputValidator
 {
-  public static T ValidateInput<T>(String msg, String errorMsg, Parser<T> parser, Validator<T> validator)
+  public static T ValidateInput<T>(String msg, Parser<T> parser, Validator<T> validator)
   {
     while (true)
     {
@@ -15,10 +15,19 @@ public class InputValidator
         continue;
 
       var (value, isValid) = parser.Parse(fromUser.Trim());
-      if (isValid && validator.Validate(value))
-        return value;
-      else
-        Console.WriteLine(errorMsg);
+      if (!isValid)
+      {
+        Console.WriteLine(parser.ParseError());
+        continue;
+      }
+      var validationError = validator.Validate(value);
+      if (validationError is not null)
+      {
+        Console.WriteLine(validationError);
+        continue;
+      }
+
+      return value;
     }
   }
 }

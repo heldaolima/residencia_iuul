@@ -9,36 +9,38 @@ public class CreateConsultationMenu
 {
     public static Menu.MenuOptions Create()
     {
-        var patientCpf = InputValidator.ValidateInput(
-                "Insira o CPF do paciente: ",
-                "Erro: CPF inválido.",
-                new StringParser(),
-                new CPFValidator()
-                );
+        String cpf;
+        while (true)
+        {
+            cpf = InputValidator.ValidateInput(
+                    "Insira o CPF do paciente: ",
+                    new StringParser(),
+                    new CPFValidator()
+                    );
 
-        var patient =
-            Registration.GetRegistration().GetPatientByCpf(patientCpf);
+            if (!Registration.GetRegistration().IsCpfRegistered(cpf))
+            {
+                Console.WriteLine("Erro: O CPF inserido não foi encontrado na base de dados.");
+                continue;
+            }
 
-        if (patient is null)
-            return Menu.MenuOptions.ShowAgain;
+            break;
+        }
 
         DateTime date = InputValidator.ValidateInput(
                 "Insira a data da consulta [DDMMAAAA]: ",
-                "Erro: data inserida inválida.",
                 new DateTimeParser(),
-                new BirthDateValidator()
+                new ConsultationDateTimeValidator()
                 );
 
         TimeSpan startHour = InputValidator.ValidateInput(
                 "Insira a hora de início da consulta [HHMM]: ",
-                "Erro: a hora inserida é inválida.",
                 new HourOfTheDayParser(),
                 new StartHourValidator()
                 );
 
         TimeSpan endHour = InputValidator.ValidateInput(
                 "Insira a hora de fim da consulta [HHMM]: ",
-                "Erro: a hora inserida é inválida.",
                 new HourOfTheDayParser(),
                 new FinalHourValidator(startHour)
                 );
@@ -46,7 +48,10 @@ public class CreateConsultationMenu
         var startDate = date.Date.Add(startHour);
         var endDate = date.Date.Add(endHour);
 
+        var patient =
+            Registration.GetRegistration().GetPatientByCpf(cpf);
         var interval = new TimeInterval(startDate, endDate);
+        // TODO: check if there is overlapping
         var consultation = new Consultation(patient, interval);
 
         return Menu.MenuOptions.DisplayAgendaMenu;

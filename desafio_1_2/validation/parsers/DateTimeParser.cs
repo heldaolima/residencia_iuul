@@ -18,4 +18,6 @@ public class DateTimeParser : Parser<DateTime>
       return (new DateTime(), false);
     }
   }
+
+  public String ParseError() => "Entrada inválida para data de nascimento.";
 }

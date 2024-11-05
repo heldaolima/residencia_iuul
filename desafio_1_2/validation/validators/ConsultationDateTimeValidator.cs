@@ -1,14 +1,15 @@
 namespace DentalOffice.Validation.Validators;
 
-using DentalOffice;
 
-public class ConsultationDateTimeValidator : Validator<TimeInterval>
+public class ConsultationDateTimeValidator : Validator<DateTime>
 {
-  public bool Validate(TimeInterval value)
+  public String? Validate(DateTime value)
   {
+    // TODO: check if value > today (ou esperar ter o timespan)
+    // TODO: check if patient already has a consultation
     DateTime today = DateTime.Today;
     /*today.Hour = 1;*/
-    return true;
+    return null;
 
   }
 

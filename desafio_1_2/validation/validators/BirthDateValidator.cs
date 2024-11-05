@@ -4,9 +4,12 @@ public class BirthDateValidator : Validator<DateTime>
 {
   private int MinAge = 13;
 
-  public bool Validate(DateTime value)
+  public String? Validate(DateTime value)
   {
     var yearsAgo = DateTime.Today.AddYears(-MinAge);
-    return value <= yearsAgo;
+    if (value <= yearsAgo)
+      return null;
+
+    return $"Erro: Não são aceitas pessoas com menos de {MinAge} anos.";
   }
 }

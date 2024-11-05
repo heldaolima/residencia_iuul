@@ -18,16 +18,13 @@ public class TimeInterval : IEquatable<TimeInterval>
   public DateTime Start => start;
   public DateTime End => end;
 
-  public bool Intersects(TimeInterval interval)
+  public bool Overlaps(TimeInterval other)
   {
-    return start < interval.End && interval.Start < end;
+    return start < other.End && other.Start < end;
   }
 
   public static bool operator ==(TimeInterval a, TimeInterval b)
   {
-    if (ReferenceEquals(a, b))
-      return true;
-
     if (a is null || b is null)
       return false;
 
@@ -56,7 +53,11 @@ public class TimeInterval : IEquatable<TimeInterval>
 
   public bool Equals(TimeInterval? other)
   {
-    if (other is null) return false;
+    if (other is null)
+      return false;
+
+    if (ReferenceEquals(this, other))
+      return true;
 
     return start == other.Start && end == other.End;
   }

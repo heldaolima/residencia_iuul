@@ -26,8 +26,14 @@ class Registration
     return patients.Remove(p);
   }
 
+
   public Patient? GetPatientByCpf(String cpf)
   {
     return patients.Find((p) => p.CPF == cpf);
+  }
+
+  public bool IsCpfRegistered(String cpf)
+  {
+    return patients.Exists((p) => p.CPF == cpf);
   }
 }

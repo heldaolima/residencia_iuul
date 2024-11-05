@@ -10,17 +10,17 @@ public class FinalHourValidator : Validator<TimeSpan>
     this.start = start;
   }
 
-  public bool Validate(TimeSpan value)
+  public String? Validate(TimeSpan value)
   {
-    if (value >= start)
-      return false;
+    if (value <= start)
+      return "Erro: A hora final não pode ser antes da inicial.";
 
     if (start.Add(value) > limit)
-      return false;
+      return "Erro: a consulta ultrapassa o horário de funcionamento do consultório (até às 19h00).";
 
     if (value.Minutes % 15 != 0)
-      return false;
+      return "Erro: horários de consulta devem ser definidos de 15 em 15 minutos.";
 
-    return true;
+    return null;
   }
 }

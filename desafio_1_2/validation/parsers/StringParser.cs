@@ -9,4 +9,5 @@ public class StringParser : Parser<String>
     return ("", false);
   }
 
+  public String ParseError() => "Entrada inválida.";
 }
