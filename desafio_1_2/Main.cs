@@ -1,6 +1,8 @@
 ﻿namespace DentalOffice;
+
+using DentalOffice.Presentation;
 using DentalOffice.Presentation.StaticMenus;
-using DentalOffice.Presentation.FactoryMenus;
+using DentalOffice.Presentation.ActionMenus;
 
 class App
 {
@@ -8,22 +10,44 @@ class App
   {
     var mainMenu = new MainMenu();
     var patientRegistrationMenu = new PatientRegistrationMenu();
-    var agendaMenu = new AgendaMenu();
+    var consultationsMenu = new ConsultationsMenu();
+    var listAgendaMenu = new ChooseListConsultationsMenu();
 
-    Menu currentMenu = mainMenu;
+    Menu? currentMenu = mainMenu;
+    var action = MenuOptions.GoBackToMainMenu;
     while (true)
     {
-      var action = currentMenu.Display();
-      if (action == Menu.MenuOptions.DisplayPatientsMenu)
-        currentMenu = patientRegistrationMenu;
-      else if (action == Menu.MenuOptions.DisplayAgendaMenu)
-        currentMenu = agendaMenu;
-      else if (action == Menu.MenuOptions.DisplayRegisterPatientMenu)
-        action = CreatePatient.Create();
-      else if (action == Menu.MenuOptions.Terminate)
+      currentMenu = action switch
+      {
+        MenuOptions.GoBackToMainMenu => mainMenu,
+        MenuOptions.DisplayPatientsMenu => patientRegistrationMenu,
+        MenuOptions.DisplayConsultationMenu => consultationsMenu,
+        MenuOptions.DisplayChooseListConsultationsMenu => listAgendaMenu,
+        MenuOptions.ShowAgain => currentMenu,
+        MenuOptions.Terminate => null,
+
+        _ => currentMenu
+      };
+
+      if (action == MenuOptions.Terminate || currentMenu is null)
         break;
-      else if (action == Menu.MenuOptions.ShowAgain)
-        continue;
+
+      action = currentMenu.Display();
+
+      action = action switch
+      {
+        MenuOptions.DisplayRegisterPatientMenu => CreatePatientMenu.Display(),
+        MenuOptions.DisplayExcludePatientMenu => DeletePatientMenu.Display(),
+        MenuOptions.DisplayListPatientsByCpf => ListPatientsByCpfMenu.Display(),
+        MenuOptions.DisplayListPatientsByName => ListPatientsByNameMenu.Display(),
+        MenuOptions.DisplayCreateConsultationMenu => CreateConsultationMenu.Display(),
+        MenuOptions.DisplayCancelConsultationMenu => CancelConsultationMenu.Display(),
+        MenuOptions.DisplayListAllConsultations => ListAllConsultations.Display(),
+        MenuOptions.DisplayListConsultationsInsidePeriod => ListConsultationsInsidePeriod.Display(),
+
+        _ => action
+      };
+
     }
   }
 }

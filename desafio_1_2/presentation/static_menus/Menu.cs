@@ -1,26 +1,8 @@
 namespace DentalOffice.Presentation.StaticMenus;
+using DentalOffice.Presentation;
 
 public abstract class Menu
 {
-  public enum MenuOptions
-  {
-    ShowAgain,
-    Terminate,
-    GoBackToMainMenu,
-
-    DisplayPatientsMenu,
-    DisplayAgendaMenu,
-
-    DisplayRegisterPatientMenu,
-    DisplayExcludePatientMenu,
-    ListPatientsByCpf,
-    ListPatientsByName,
-
-    DisplayScheduleAppointmentMenu,
-    DisplayCancelAppointmentMenu,
-    DisplayListAppointmentsMenu,
-  }
-
   protected List<String> options = new List<String>();
 
   private bool IsInsideBounds(int option) =>

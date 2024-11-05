@@ -17,8 +17,8 @@ class PatientRegistrationMenu : Menu
     {
       1 => MenuOptions.DisplayRegisterPatientMenu,
       2 => MenuOptions.DisplayExcludePatientMenu,
-      3 => MenuOptions.ListPatientsByCpf,
-      4 => MenuOptions.ListPatientsByName,
+      3 => MenuOptions.DisplayListPatientsByCpf,
+      4 => MenuOptions.DisplayListPatientsByName,
       5 => MenuOptions.GoBackToMainMenu,
       _ => MenuOptions.ShowAgain,
     };

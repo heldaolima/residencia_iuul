@@ -1,13 +1,14 @@
-namespace DentalOffice.Presentation.FactoryMenus;
+namespace DentalOffice.Presentation.ActionMenus;
 
-using DentalOffice.Presentation.StaticMenus;
+using DentalOffice.Presentation;
+
 using DentalOffice.Validation;
 using DentalOffice.Validation.Validators;
 using DentalOffice.Validation.Parsers;
 
-public class CreateConsultationMenu
+public class CreateConsultationMenu : ActionMenu
 {
-    public static Menu.MenuOptions Create()
+    public static MenuOptions Display()
     {
         String cpf;
         while (true)
@@ -54,6 +55,6 @@ public class CreateConsultationMenu
         // TODO: check if there is overlapping
         var consultation = new Consultation(patient, interval);
 
-        return Menu.MenuOptions.DisplayAgendaMenu;
+        return MenuOptions.DisplayConsultationMenu;
     }
 }

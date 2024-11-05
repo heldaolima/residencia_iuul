@@ -14,7 +14,7 @@ class MainMenu : Menu
     return (option) switch
     {
       1 => MenuOptions.DisplayPatientsMenu,
-      2 => MenuOptions.DisplayAgendaMenu,
+      2 => MenuOptions.DisplayConsultationMenu,
       3 => MenuOptions.Terminate,
       _ => MenuOptions.ShowAgain
     };

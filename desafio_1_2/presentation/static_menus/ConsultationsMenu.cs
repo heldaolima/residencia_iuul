@@ -1,8 +1,8 @@
 namespace DentalOffice.Presentation.StaticMenus;
 
-class AgendaMenu : Menu
+class ConsultationsMenu : Menu
 {
-  public AgendaMenu()
+  public ConsultationsMenu()
   {
     options.Add("Agendar consulta");
     options.Add("Cancelar agendamento");
@@ -14,9 +14,10 @@ class AgendaMenu : Menu
   {
     return (option) switch
     {
-      1 => MenuOptions.DisplayScheduleAppointmentMenu,
-      2 => MenuOptions.DisplayCancelAppointmentMenu,
-      3 => MenuOptions.DisplayListAppointmentsMenu,
+      1 => MenuOptions.DisplayCreateConsultationMenu,
+      2 => MenuOptions.DisplayCancelConsultationMenu,
+      3 => MenuOptions.DisplayChooseListConsultationsMenu,
+      4 => MenuOptions.GoBackToMainMenu,
       _ => MenuOptions.ShowAgain,
     };
   }

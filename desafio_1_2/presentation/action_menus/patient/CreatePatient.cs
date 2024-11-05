@@ -1,13 +1,12 @@
-namespace DentalOffice.Presentation.FactoryMenus;
+namespace DentalOffice.Presentation.ActionMenus;
 
 using DentalOffice.Validation.Validators;
 using DentalOffice.Validation.Parsers;
 using DentalOffice.Validation;
-using DentalOffice.Presentation.StaticMenus;
 
-public class CreatePatient
+public class CreatePatientMenu : ActionMenu
 {
-    public static Menu.MenuOptions Create()
+    public static MenuOptions Display()
     {
         String name = InputValidator.ValidateInput(
             "Insira o nome do paciente: ",
@@ -43,6 +42,6 @@ public class CreatePatient
         Console.WriteLine(patient);
         Console.WriteLine($"Paciente adicionado.");
 
-        return Menu.MenuOptions.DisplayPatientsMenu;
+        return MenuOptions.DisplayPatientsMenu;
     }
 }
