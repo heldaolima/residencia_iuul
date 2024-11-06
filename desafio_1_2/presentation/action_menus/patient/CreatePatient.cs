@@ -8,31 +8,32 @@ public class CreatePatientMenu : ActionMenu
 {
     public static MenuOptions Display()
     {
-        String name = InputValidator.ValidateInput(
-            "Insira o nome do paciente: ",
-            new StringParser(),
-            new NameValidator()
-          );
-
         String cpf;
         while (true)
         {
             cpf = InputValidator.ValidateInput(
-                    "Insira o CPF do paciente (apenas números): ",
+                    "CPF: ",
                     new StringParser(),
                     new CPFValidator()
                     );
 
             if (Registration.GetRegistration().IsCpfRegistered(cpf))
             {
-                Console.WriteLine("Erro: O CPF inserido já foi registrado.");
+                Console.WriteLine("Erro: CPF já cadastrado");
                 continue;
             }
             break;
         }
 
+        String name = InputValidator.ValidateInput(
+            "Nome: ",
+            new StringParser(),
+            new NameValidator()
+          );
+
+
         DateTime birthDate = InputValidator.ValidateInput(
-            "Insira a data de nascimento [DDMMAAAA] (é necessário ter no mínimo 13 anos): ",
+            "Data de nascimento [DDMMAAAA]: ",
             new DateTimeParser(),
             new BirthDateValidator()
           );
@@ -40,8 +41,7 @@ public class CreatePatientMenu : ActionMenu
         var patient = new Patient(name, cpf, birthDate);
         Registration.GetRegistration().Add(patient);
 
-        Console.WriteLine(patient);
-        Console.WriteLine($"Paciente adicionado.");
+        Console.WriteLine("Paciente cadastrado com sucesso!");
 
         return MenuOptions.DisplayPatientsMenu;
     }

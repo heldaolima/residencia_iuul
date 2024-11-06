@@ -2,7 +2,7 @@ namespace DentalOffice.Validation.Validators;
 
 public class BirthDateValidator : Validator<DateTime>
 {
-  private int MinAge = 13;
+  private const int MinAge = 13;
 
   public String? Validate(DateTime value)
   {
@@ -10,6 +10,6 @@ public class BirthDateValidator : Validator<DateTime>
     if (value <= yearsAgo)
       return null;
 
-    return $"Erro: Não são aceitas pessoas com menos de {MinAge} anos.";
+    return $"Erro: paciente deve ter pelo menos {MinAge} anos.";
   }
 }

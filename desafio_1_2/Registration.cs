@@ -36,4 +36,10 @@ class Registration
   {
     return patients.Exists((p) => p.CPF == cpf);
   }
+
+  public bool RemoveByCpf(String cpf)
+  {
+    int num = patients.RemoveAll((p) => p.CPF == cpf);
+    return num > 0;
+  }
 }
