@@ -11,7 +11,7 @@ class App
     var mainMenu = new MainMenu();
     var patientRegistrationMenu = new PatientRegistrationMenu();
     var consultationsMenu = new ConsultationsMenu();
-    var listAgendaMenu = new ChooseListConsultationsMenu();
+    var chooseListConsultations = new ChooseListConsultationsMenu();
 
     Menu? currentMenu = mainMenu;
     var action = MenuOptions.GoBackToMainMenu;
@@ -22,7 +22,7 @@ class App
         MenuOptions.GoBackToMainMenu => mainMenu,
         MenuOptions.DisplayPatientsMenu => patientRegistrationMenu,
         MenuOptions.DisplayConsultationMenu => consultationsMenu,
-        MenuOptions.DisplayChooseListConsultationsMenu => listAgendaMenu,
+        MenuOptions.DisplayChooseListConsultationsMenu => chooseListConsultations,
         MenuOptions.ShowAgain => currentMenu,
         MenuOptions.Terminate => null,
 
@@ -47,7 +47,6 @@ class App
 
         _ => action
       };
-
     }
   }
 }

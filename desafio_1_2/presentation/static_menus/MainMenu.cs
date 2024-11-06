@@ -1,6 +1,6 @@
 namespace DentalOffice.Presentation.StaticMenus;
 
-class MainMenu : Menu
+class MainMenu : StaticMenu
 {
   public MainMenu()
   {

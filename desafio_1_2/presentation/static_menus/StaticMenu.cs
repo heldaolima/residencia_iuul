@@ -1,7 +1,7 @@
 namespace DentalOffice.Presentation.StaticMenus;
 using DentalOffice.Presentation;
 
-public abstract class Menu
+public abstract class StaticMenu : Menu
 {
   protected List<String> options = new List<String>();
 

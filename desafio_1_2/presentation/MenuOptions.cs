@@ -2,7 +2,6 @@ namespace DentalOffice.Presentation;
 
 public enum MenuOptions
 {
-  Start,
   ShowAgain,
   Terminate,
   GoBackToMainMenu,

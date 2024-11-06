@@ -8,6 +8,7 @@ public class NameValidator : Validator<String>
   {
     if (value.Length < MinChars)
       return $"Erro: O nome deve ter no mínimo {MinChars} caracteres.";
+
     return null;
   }
 }

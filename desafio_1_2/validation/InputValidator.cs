@@ -20,6 +20,7 @@ public class InputValidator
         Console.WriteLine(parser.ParseError());
         continue;
       }
+
       var validationError = validator.Validate(value);
       if (validationError is not null)
       {

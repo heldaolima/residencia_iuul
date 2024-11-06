@@ -22,6 +22,7 @@ public class CreatePatientMenu : ActionMenu
                     new StringParser(),
                     new CPFValidator()
                     );
+
             if (Registration.GetRegistration().IsCpfRegistered(cpf))
             {
                 Console.WriteLine("Erro: O CPF inserido já foi registrado.");

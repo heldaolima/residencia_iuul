@@ -1,6 +1,6 @@
 namespace DentalOffice.Presentation.StaticMenus;
 
-class PatientRegistrationMenu : Menu
+class PatientRegistrationMenu : StaticMenu
 {
   public PatientRegistrationMenu()
   {
