@@ -8,22 +8,11 @@ public class CreatePatientMenu : ActionMenu
 {
     public static MenuOptions Display()
     {
-        String cpf;
-        while (true)
-        {
-            cpf = InputValidator.ValidateInput(
+        String cpf = InputValidator.ValidateInput(
                     "CPF: ",
                     new StringParser(),
-                    new CPFValidator()
+                    new CreatePatientValidator()
                     );
-
-            if (Registration.GetRegistration().IsCpfRegistered(cpf))
-            {
-                Console.WriteLine("Erro: CPF já cadastrado");
-                continue;
-            }
-            break;
-        }
 
         String name = InputValidator.ValidateInput(
             "Nome: ",
@@ -39,7 +28,7 @@ public class CreatePatientMenu : ActionMenu
           );
 
         var patient = new Patient(name, cpf, birthDate);
-        Registration.GetRegistration().Add(patient);
+        Registration.GetRegistration().AddPatient(patient);
 
         Console.WriteLine("Paciente cadastrado com sucesso!");
 

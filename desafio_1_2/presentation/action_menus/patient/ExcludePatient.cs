@@ -11,19 +11,24 @@ public class DeletePatientMenu : ActionMenu
         String cpf = InputValidator.ValidateInput(
                     "CPF: ",
                     new StringParser(),
-                    new CPFValidator()
+                    new GetPatientValidator()
                     );
 
-        if (Registration.GetRegistration().IsCpfRegistered(cpf))
+        var registration = Registration.GetRegistration();
+
+        var patient = registration.GetPatientByCpf(cpf);
+        if (patient is null)
+            return MenuOptions.DisplayPatientsMenu;
+
+        if (patient.HasFutureConsultation())
         {
-            bool removed = Registration.GetRegistration().RemoveByCpf(cpf);
-            if (removed)
-                Console.WriteLine("Paciente excluído com sucesso!");
-            else
-                Console.WriteLine("Erro ao excluir paciente. Tente novamente.");
+            Console.WriteLine("Erro: paciente está agendado.");
         }
         else
-            Console.WriteLine("Erro: paciente não registrado.");
+        {
+            Registration.GetRegistration().RemovePatient(patient);
+            Console.WriteLine("Paciente excluído com sucesso!");
+        }
 
         return MenuOptions.DisplayPatientsMenu;
     }

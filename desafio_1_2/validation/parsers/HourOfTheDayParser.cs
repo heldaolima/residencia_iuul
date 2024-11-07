@@ -15,7 +15,7 @@ public class HourOfTheDayParser : Parser<TimeSpan>
     if (!valid)
       return (TimeSpan.Zero, false);
 
-    String minutesString = value.Substring(2, 4);
+    String minutesString = value.Substring(2, 2);
     valid = int.TryParse(minutesString, out minutes);
     if (!valid)
       return (TimeSpan.Zero, false);

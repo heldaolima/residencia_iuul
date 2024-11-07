@@ -5,12 +5,8 @@ public class ConsultationDateTimeValidator : Validator<DateTime>
 {
   public String? Validate(DateTime value)
   {
-    // TODO: check if value > today (ou esperar ter o timespan)
-    // TODO: check if patient already has a consultation
-    DateTime today = DateTime.Today;
-    /*today.Hour = 1;*/
+    if (value < DateTime.Today)
+      return "Erro: não é possível agendar consultas para o passado.";
     return null;
-
   }
-
 }

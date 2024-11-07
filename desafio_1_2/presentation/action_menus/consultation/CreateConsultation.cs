@@ -10,50 +10,56 @@ public class CreateConsultationMenu : ActionMenu
 {
     public static MenuOptions Display()
     {
-        String cpf;
+        String cpf = InputValidator.ValidateInput(
+                "CPF: ",
+                new StringParser(),
+                new GetPatientValidator()
+                );
+
+        var registration = Registration.GetRegistration();
+        var patient = registration.GetPatientByCpf(cpf);
+
+        DateTime baseDate, startDate, endDate;
+        TimeSpan startHour, endHour;
+        TimeInterval consultationTime;
+
         while (true)
         {
-            cpf = InputValidator.ValidateInput(
-                    "Insira o CPF do paciente: ",
-                    new StringParser(),
-                    new CPFValidator()
+            baseDate = InputValidator.ValidateInput(
+                    "Data da consulta [DDMMAAAA]: ",
+                    new DateTimeParser(),
+                    new ConsultationDateTimeValidator()
                     );
 
-            if (!Registration.GetRegistration().IsCpfRegistered(cpf))
+            startHour = InputValidator.ValidateInput(
+                    "Hora inicial [HHMM]: ",
+                    new HourOfTheDayParser(),
+                    new StartHourValidator(baseDate)
+                    );
+
+            startDate = baseDate.Date.Add(startHour);
+
+            endHour = InputValidator.ValidateInput(
+                    "Hora final [HHMM]: ",
+                    new HourOfTheDayParser(),
+                    new FinalHourValidator(startHour)
+                    );
+
+            endDate = baseDate.Date.Add(endHour);
+
+            consultationTime = new TimeInterval(startDate, endDate);
+            if (registration.DoesConsultationTimeOverlaps(consultationTime))
             {
-                Console.WriteLine("Erro: O CPF inserido não foi encontrado na base de dados.");
+                Console.WriteLine("Erro: já existe uma consulta marcada para este horário.");
                 continue;
             }
-
             break;
         }
 
-        DateTime date = InputValidator.ValidateInput(
-                "Insira a data da consulta [DDMMAAAA]: ",
-                new DateTimeParser(),
-                new ConsultationDateTimeValidator()
-                );
+        var consultation = new Consultation(patient, consultationTime);
+        registration.AddConsultation(consultation);
 
-        TimeSpan startHour = InputValidator.ValidateInput(
-                "Insira a hora de início da consulta [HHMM]: ",
-                new HourOfTheDayParser(),
-                new StartHourValidator()
-                );
-
-        TimeSpan endHour = InputValidator.ValidateInput(
-                "Insira a hora de fim da consulta [HHMM]: ",
-                new HourOfTheDayParser(),
-                new FinalHourValidator(startHour)
-                );
-
-        var startDate = date.Date.Add(startHour);
-        var endDate = date.Date.Add(endHour);
-
-        var patient =
-            Registration.GetRegistration().GetPatientByCpf(cpf);
-        var interval = new TimeInterval(startDate, endDate);
-        // TODO: check if there is overlapping
-        var consultation = new Consultation(patient, interval);
+        Console.WriteLine("Consulta agendada com sucesso!");
 
         return MenuOptions.DisplayConsultationMenu;
     }

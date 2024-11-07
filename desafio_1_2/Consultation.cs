@@ -2,12 +2,14 @@ namespace DentalOffice;
 
 public class Consultation
 {
-  private Patient patient;
-  private TimeInterval timeSchedule;
+  public Patient Patient { get; private set; }
+  public TimeInterval TimeSchedule { get; private set; }
 
   public Consultation(Patient patient, TimeInterval timeSchedule)
   {
-    this.patient = patient;
-    this.timeSchedule = timeSchedule;
+    Patient = patient;
+    Patient.SetConsultation(this);
+
+    TimeSchedule = timeSchedule;
   }
 }
