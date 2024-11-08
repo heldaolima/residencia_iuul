@@ -12,12 +12,12 @@ public class HourOfTheDayParser : InputParser<TimeSpan>
 
     String hoursString = value.Substring(0, 2);
     valid = int.TryParse(hoursString, out hours);
-    if (!valid)
+    if (!valid || (hours < 0 || hours > 23))
       return (TimeSpan.Zero, false);
 
     String minutesString = value.Substring(2, 2);
     valid = int.TryParse(minutesString, out minutes);
-    if (!valid)
+    if (!valid || (minutes < 0 || minutes > 59))
       return (TimeSpan.Zero, false);
 
     return (new TimeSpan(hours, minutes, 0), true);

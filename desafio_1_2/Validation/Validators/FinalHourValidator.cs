@@ -12,7 +12,6 @@ public class FinalHourValidator : Validator<TimeSpan>
 
   public String? Validate(TimeSpan value)
   {
-    Console.WriteLine($"Final time span: {value}");
     if (value <= start)
       return "Erro: A hora final não pode ser antes da inicial.";
 

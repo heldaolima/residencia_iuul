@@ -26,26 +26,38 @@ public class CancelConsultationAction : Action
             return ActionOptions.ShowConsultationMenu;
         }
 
-        DateTime baseDate = UserInputHandler.Handle(
+        DateTime startDate;
+
+        while (true)
+        {
+            DateTime baseDate = UserInputHandler.Handle(
                     "Data da consulta [DDMMAAAA]: ",
                     new DateTimeParser(),
                     new ConsultationDateTimeValidator()
                     );
 
-        TimeSpan startHour = UserInputHandler.Handle(
+            TimeSpan startHour = UserInputHandler.Handle(
                     "Hora inicial [HHMM]: ",
                     new HourOfTheDayParser(),
                     new StartHourValidator(baseDate)
                     );
 
-        DateTime startDate = baseDate.Date.Add(startHour);
+            startDate = baseDate.Date.Add(startHour);
+            if (startDate < DateTime.Now)
+            {
+                Console.WriteLine("Erro: consultas só podem ser agendadas para o futuro.");
+                continue;
+            }
+            break;
+        }
+
         if (patient.IsTheSameConsultation(startDate) && patient.Consultation is not null)
         {
             Agenda.Get().RemoveConsultation(patient.Consultation);
             Console.WriteLine("Agendamento cancelado com sucesso!");
         }
-
-        Console.WriteLine("Erro: agendamento não encontrado.");
+        else
+            Console.WriteLine("Erro: agendamento não encontrado.");
 
         return ActionOptions.ShowConsultationMenu;
     }

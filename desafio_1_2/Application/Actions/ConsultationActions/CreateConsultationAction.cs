@@ -30,27 +30,29 @@ public class CreateConsultationAction : Action
             return ActionOptions.ShowConsultationMenu;
         }
 
-        DateTime baseDate, startDate, endDate;
-        TimeSpan startHour, endHour;
-        TimeInterval consultationTime;
-
+        DateTime startDate, endDate;
         while (true)
         {
-            baseDate = UserInputHandler.Handle(
+            DateTime baseDate = UserInputHandler.Handle(
                     "Data da consulta [DDMMAAAA]: ",
                     new DateTimeParser(),
                     new ConsultationDateTimeValidator()
                     );
 
-            startHour = UserInputHandler.Handle(
+            TimeSpan startHour = UserInputHandler.Handle(
                     "Hora inicial [HHMM]: ",
                     new HourOfTheDayParser(),
                     new StartHourValidator(baseDate)
                     );
 
             startDate = baseDate.Date.Add(startHour);
+            if (startDate < DateTime.Now)
+            {
+                Console.WriteLine("Erro: consultas só podem ser agendadas para o futuro.");
+                continue;
+            }
 
-            endHour = UserInputHandler.Handle(
+            TimeSpan endHour = UserInputHandler.Handle(
                     "Hora final [HHMM]: ",
                     new HourOfTheDayParser(),
                     new FinalHourValidator(startHour)
@@ -58,7 +60,7 @@ public class CreateConsultationAction : Action
 
             endDate = baseDate.Date.Add(endHour);
 
-            consultationTime = new TimeInterval(startDate, endDate);
+            var consultationTime = new TimeInterval(startDate, endDate);
             if (agenda.DoesConsultationTimeOverlaps(consultationTime))
             {
                 Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");
