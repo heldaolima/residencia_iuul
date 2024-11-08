@@ -11,11 +11,10 @@ public class DeletePatientMenu : ActionMenu
         String cpf = InputValidator.ValidateInput(
                     "CPF: ",
                     new StringParser(),
-                    new GetPatientValidator()
+                    new IsPatientRegisteredValidator()
                     );
 
         var registration = Registration.GetRegistration();
-
         var patient = registration.GetPatientByCpf(cpf);
         if (patient is null)
             return MenuOptions.DisplayPatientsMenu;

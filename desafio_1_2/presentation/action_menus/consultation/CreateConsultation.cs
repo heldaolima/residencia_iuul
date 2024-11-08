@@ -13,11 +13,19 @@ public class CreateConsultationMenu : ActionMenu
         String cpf = InputValidator.ValidateInput(
                 "CPF: ",
                 new StringParser(),
-                new GetPatientValidator()
+                new IsPatientRegisteredValidator()
                 );
 
         var registration = Registration.GetRegistration();
         var patient = registration.GetPatientByCpf(cpf);
+        if (patient is null)
+            return MenuOptions.DisplayConsultationMenu;
+
+        if (patient.HasFutureConsultation())
+        {
+            Console.WriteLine("Erro: paciente está agendado.");
+            return MenuOptions.DisplayConsultationMenu;
+        }
 
         DateTime baseDate, startDate, endDate;
         TimeSpan startHour, endHour;
@@ -50,7 +58,7 @@ public class CreateConsultationMenu : ActionMenu
             consultationTime = new TimeInterval(startDate, endDate);
             if (registration.DoesConsultationTimeOverlaps(consultationTime))
             {
-                Console.WriteLine("Erro: já existe uma consulta marcada para este horário.");
+                Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");
                 continue;
             }
             break;

@@ -11,7 +11,7 @@ public class CreatePatientMenu : ActionMenu
         String cpf = InputValidator.ValidateInput(
                     "CPF: ",
                     new StringParser(),
-                    new CreatePatientValidator()
+                    new DoubleCpfValidator()
                     );
 
         String name = InputValidator.ValidateInput(
@@ -19,7 +19,6 @@ public class CreatePatientMenu : ActionMenu
             new StringParser(),
             new NameValidator()
           );
-
 
         DateTime birthDate = InputValidator.ValidateInput(
             "Data de nascimento [DDMMAAAA]: ",

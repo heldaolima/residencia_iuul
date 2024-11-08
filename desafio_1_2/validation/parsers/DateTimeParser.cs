@@ -19,5 +19,5 @@ public class DateTimeParser : Parser<DateTime>
     }
   }
 
-  public String ParseError() => "Entrada inválida para data de nascimento.";
+  public String ParseError() => "Entrada inválida para data.";
 }
