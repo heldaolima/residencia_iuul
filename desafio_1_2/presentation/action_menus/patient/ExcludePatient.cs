@@ -20,9 +20,7 @@ public class DeletePatientMenu : ActionMenu
             return MenuOptions.DisplayPatientsMenu;
 
         if (patient.HasFutureConsultation())
-        {
             Console.WriteLine("Erro: paciente está agendado.");
-        }
         else
         {
             Registration.GetRegistration().RemovePatient(patient);

@@ -2,10 +2,7 @@ namespace DentalOffice;
 
 class Registration
 {
-  // trocar por um hash[cpf] => patient
-  // extract to patientsList
-  private List<Patient> patients = new List<Patient>();
-  // extract to Agenda
+  private Dictionary<String, Patient> patients = new Dictionary<String, Patient>();
   private List<Consultation> consultations = new List<Consultation>();
 
   private static Registration? registration = null;
@@ -21,25 +18,25 @@ class Registration
     return registration;
   }
 
-  public void AddPatient(Patient p) => patients.Add(p);
+  public void AddPatient(Patient p) => patients[p.CPF] = p;
 
   public void RemovePatient(Patient p)
   {
     consultations.RemoveAll((c) => c.Patient == p);
-    patients.Remove(p);
+    patients.Remove(p.CPF);
   }
 
-  public Patient? GetPatientByCpf(String cpf) =>
-    patients.Find((p) => p.CPF == cpf);
+  public Patient? GetPatientByCpf(String cpf)
+  {
+    if (patients.ContainsKey(cpf))
+      return patients[cpf];
+    return null;
+  }
 
   public bool IsCpfRegistered(String cpf) =>
-    patients.Exists((p) => p.CPF == cpf);
+    patients.ContainsKey(cpf);
 
-  public bool RemovePatientByCpf(String cpf)
-  {
-    int num = patients.RemoveAll((p) => p.CPF == cpf);
-    return num > 0;
-  }
+  public bool RemovePatientByCpf(String cpf) => patients.Remove(cpf);
 
   public void AddConsultation(Consultation c) => consultations.Add(c);
 
