@@ -2,7 +2,7 @@ namespace DentalOffice;
 
 class Registration
 {
-  private Dictionary<String, Patient> patients = new Dictionary<String, Patient>();
+  private SortedDictionary<String, Patient> patients = new SortedDictionary<String, Patient>();
   private List<Consultation> consultations = new List<Consultation>();
 
   private static Registration? registration = null;
@@ -17,6 +17,11 @@ class Registration
     }
     return registration;
   }
+
+  public List<Patient> GetOrderedByCpf() => patients.Values.ToList();
+
+  public List<Patient> GetOrderedByName() =>
+    patients.Values.OrderBy(patient => patient.Name).ToList();
 
   public void AddPatient(Patient p) => patients[p.CPF] = p;
 
@@ -40,7 +45,11 @@ class Registration
 
   public void AddConsultation(Consultation c) => consultations.Add(c);
 
-  public bool RemoveConsultation(Consultation c) => consultations.Remove(c);
+  public void RemoveConsultation(Consultation c)
+  {
+    consultations.Remove(c);
+    c.Patient.RemoveConsultation();
+  }
 
   public bool DoesConsultationTimeOverlaps(TimeInterval newInterval)
   {
