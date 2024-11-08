@@ -1,9 +1,13 @@
 namespace DentalOffice;
 
+using System.Collections.ObjectModel;
+
 class Registration
 {
   private SortedDictionary<String, Patient> patients = new SortedDictionary<String, Patient>();
   private List<Consultation> consultations = new List<Consultation>();
+
+  public ReadOnlyCollection<Consultation> Consultations => consultations.AsReadOnly();
 
   private static Registration? registration = null;
 
