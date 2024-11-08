@@ -1,5 +1,6 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
+using DentalOffice.Domain;
 using DentalOffice.Validation;
 using DentalOffice.Validation.Parsers;
 using DentalOffice.Validation.Validators;
@@ -14,7 +15,7 @@ public class CancelConsultationMenu : ActionMenu
                 new IsPatientRegisteredValidator()
                 );
 
-        var registration = Registration.GetRegistration();
+        var registration = Registration.Get();
         var patient = registration.GetPatientByCpf(cpf);
         if (patient is null)
             return MenuOptions.DisplayConsultationMenu;
@@ -40,7 +41,7 @@ public class CancelConsultationMenu : ActionMenu
         DateTime startDate = baseDate.Date.Add(startHour);
         if (patient.IsTheSameConsultation(startDate) && patient.Consultation is not null)
         {
-            registration.RemoveConsultation(patient.Consultation);
+            Agenda.Get().RemoveConsultation(patient.Consultation);
             Console.WriteLine("Agendamento cancelado com sucesso!");
         }
 

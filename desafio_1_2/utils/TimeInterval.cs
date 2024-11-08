@@ -1,4 +1,4 @@
-namespace DentalOffice;
+namespace DentalOffice.Utils;
 
 public class TimeInterval : IEquatable<TimeInterval>
 {

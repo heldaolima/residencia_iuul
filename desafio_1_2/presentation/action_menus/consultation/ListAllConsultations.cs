@@ -1,10 +1,12 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
+using DentalOffice.Domain;
+
 public class ListAllConsultations : ActionMenu
 {
     public static MenuOptions Display()
     {
-        var consultations = Registration.GetRegistration().Consultations;
+        var consultations = Agenda.Get().Consultations;
         Console.WriteLine("--------------------------------------------------------------------------");
         Console.WriteLine(" Data       H.Ini  H.Fim  Tempo  Nome                          Dt.Nasc.");
         Console.WriteLine("--------------------------------------------------------------------------");

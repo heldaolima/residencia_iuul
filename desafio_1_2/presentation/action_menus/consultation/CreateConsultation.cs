@@ -1,6 +1,8 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
 using DentalOffice.Presentation;
+using DentalOffice.Domain;
+using DentalOffice.Utils;
 
 using DentalOffice.Validation;
 using DentalOffice.Validation.Validators;
@@ -16,7 +18,9 @@ public class CreateConsultationMenu : ActionMenu
                 new IsPatientRegisteredValidator()
                 );
 
-        var registration = Registration.GetRegistration();
+        var registration = Registration.Get();
+        var agenda = Agenda.Get();
+
         var patient = registration.GetPatientByCpf(cpf);
         if (patient is null)
             return MenuOptions.DisplayConsultationMenu;
@@ -56,7 +60,7 @@ public class CreateConsultationMenu : ActionMenu
             endDate = baseDate.Date.Add(endHour);
 
             consultationTime = new TimeInterval(startDate, endDate);
-            if (registration.DoesConsultationTimeOverlaps(consultationTime))
+            if (agenda.DoesConsultationTimeOverlaps(consultationTime))
             {
                 Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");
                 continue;
@@ -64,8 +68,7 @@ public class CreateConsultationMenu : ActionMenu
             break;
         }
 
-        var consultation = new Consultation(patient, consultationTime);
-        registration.AddConsultation(consultation);
+        agenda.AddConsultation(new Consultation(patient, consultationTime));
 
         Console.WriteLine("Consulta agendada com sucesso!");
 

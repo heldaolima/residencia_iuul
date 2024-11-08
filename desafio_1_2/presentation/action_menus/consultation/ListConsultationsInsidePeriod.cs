@@ -1,5 +1,6 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
+using DentalOffice.Domain;
 using DentalOffice.Validation;
 using DentalOffice.Validation.Parsers;
 using DentalOffice.Validation.Validators;
@@ -40,7 +41,7 @@ public class ListConsultationsInsidePeriod : ActionMenu
                 new FinalDateTimeValidator(startDate)
                 );
 
-        var consultations = Registration.GetRegistration().Consultations;
+        var consultations = Agenda.Get().Consultations;
         Console.WriteLine("--------------------------------------------------------------------------");
         Console.WriteLine(" Data       H.Ini  H.Fim  Tempo  Nome                          Dt.Nasc.");
         Console.WriteLine("--------------------------------------------------------------------------");

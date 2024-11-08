@@ -1,5 +1,7 @@
 namespace DentalOffice.Validation.Validators;
 
+using DentalOffice.Domain;
+
 public class GetPatientValidator : Validator<String>
 {
   public String? Validate(String cpf)
@@ -8,7 +10,7 @@ public class GetPatientValidator : Validator<String>
     if (cpfError is not null)
       return cpfError;
 
-    var patient = Registration.GetRegistration().GetPatientByCpf(cpf);
+    var patient = Registration.Get().GetPatientByCpf(cpf);
     if (patient is null)
       return "Erro: paciente não cadastrado.";
 

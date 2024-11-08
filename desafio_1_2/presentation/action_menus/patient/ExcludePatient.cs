@@ -1,5 +1,6 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
+using DentalOffice.Domain;
 using DentalOffice.Validation;
 using DentalOffice.Validation.Parsers;
 using DentalOffice.Validation.Validators;
@@ -14,7 +15,7 @@ public class DeletePatientMenu : ActionMenu
                     new IsPatientRegisteredValidator()
                     );
 
-        var registration = Registration.GetRegistration();
+        var registration = Registration.Get();
         var patient = registration.GetPatientByCpf(cpf);
         if (patient is null)
             return MenuOptions.DisplayPatientsMenu;
@@ -23,7 +24,8 @@ public class DeletePatientMenu : ActionMenu
             Console.WriteLine("Erro: paciente está agendado.");
         else
         {
-            Registration.GetRegistration().RemovePatient(patient);
+            registration.RemovePatient(patient);
+            Agenda.Get().RemovePatient(patient);
             Console.WriteLine("Paciente excluído com sucesso!");
         }
 

@@ -1,5 +1,6 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
+using DentalOffice.Domain;
 using DentalOffice.Validation.Validators;
 using DentalOffice.Validation.Parsers;
 using DentalOffice.Validation;
@@ -26,8 +27,7 @@ public class CreatePatientMenu : ActionMenu
             new BirthDateValidator()
           );
 
-        var patient = new Patient(name, cpf, birthDate);
-        Registration.GetRegistration().AddPatient(patient);
+        Registration.Get().AddPatient(new Patient(name, cpf, birthDate));
 
         Console.WriteLine("Paciente cadastrado com sucesso!");
 

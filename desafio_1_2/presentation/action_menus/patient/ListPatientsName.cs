@@ -1,10 +1,12 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
+using DentalOffice.Domain;
+
 public class ListPatientsByNameMenu : ActionMenu
 {
     public static MenuOptions Display()
     {
-        var patients = Registration.GetRegistration().GetOrderedByName();
+        var patients = Registration.Get().GetOrderedByName();
 
         if (patients.Count > 0)
         {

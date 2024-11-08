@@ -1,19 +1,14 @@
-namespace DentalOffice;
+namespace DentalOffice.Domain;
 
-using System.Collections.ObjectModel;
-
-class Registration
+public class Registration
 {
   private SortedDictionary<String, Patient> patients = new SortedDictionary<String, Patient>();
-  private List<Consultation> consultations = new List<Consultation>();
-
-  public ReadOnlyCollection<Consultation> Consultations => consultations.AsReadOnly();
 
   private static Registration? registration = null;
 
   private Registration() { }
 
-  public static Registration GetRegistration()
+  public static Registration Get()
   {
     if (registration is null)
     {
@@ -29,11 +24,8 @@ class Registration
 
   public void AddPatient(Patient p) => patients[p.CPF] = p;
 
-  public void RemovePatient(Patient p)
-  {
-    consultations.RemoveAll((c) => c.Patient == p);
+  public void RemovePatient(Patient p) =>
     patients.Remove(p.CPF);
-  }
 
   public Patient? GetPatientByCpf(String cpf)
   {
@@ -46,22 +38,4 @@ class Registration
     patients.ContainsKey(cpf);
 
   public bool RemovePatientByCpf(String cpf) => patients.Remove(cpf);
-
-  public void AddConsultation(Consultation c) => consultations.Add(c);
-
-  public void RemoveConsultation(Consultation c)
-  {
-    consultations.Remove(c);
-    c.Patient.RemoveConsultation();
-  }
-
-  public bool DoesConsultationTimeOverlaps(TimeInterval newInterval)
-  {
-    foreach (var consultation in consultations)
-    {
-      if (consultation.TimeSchedule.Overlaps(newInterval))
-        return true;
-    }
-    return false;
-  }
 }

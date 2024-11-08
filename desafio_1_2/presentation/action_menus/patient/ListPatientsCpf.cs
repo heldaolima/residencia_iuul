@@ -1,10 +1,12 @@
 namespace DentalOffice.Presentation.ActionMenus;
 
+using DentalOffice.Domain;
+
 public class ListPatientsByCpfMenu : ActionMenu
 {
     public static MenuOptions Display()
     {
-        var patients = Registration.GetRegistration().GetOrderedByCpf();
+        var patients = Registration.Get().GetOrderedByCpf();
 
         if (patients.Count > 0)
         {

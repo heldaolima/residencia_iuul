@@ -1,5 +1,7 @@
 namespace DentalOffice.Validation.Validators;
 
+using DentalOffice.Domain;
+
 public class DoubleCpfValidator : Validator<String>
 {
   public String? Validate(String cpf)
@@ -8,7 +10,7 @@ public class DoubleCpfValidator : Validator<String>
     if (cpfError is not null)
       return cpfError;
 
-    if (Registration.GetRegistration().IsCpfRegistered(cpf))
+    if (Registration.Get().IsCpfRegistered(cpf))
       return "Erro: CPF já cadastrado.";
 
     return null;

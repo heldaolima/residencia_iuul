@@ -1,4 +1,6 @@
-namespace DentalOffice;
+namespace DentalOffice.Domain;
+
+using DentalOffice.Utils;
 
 public class Consultation
 {

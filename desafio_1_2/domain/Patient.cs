@@ -1,4 +1,4 @@
-namespace DentalOffice;
+namespace DentalOffice.Domain;
 
 public class Patient
 {
