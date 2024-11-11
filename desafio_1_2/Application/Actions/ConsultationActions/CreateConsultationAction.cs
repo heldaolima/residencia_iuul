@@ -31,6 +31,7 @@ public class CreateConsultationAction : Action
         }
 
         DateTime startDate, endDate;
+        TimeInterval consultationTime;
         while (true)
         {
             DateTime baseDate = UserInputHandler.Handle(
@@ -60,7 +61,7 @@ public class CreateConsultationAction : Action
 
             endDate = baseDate.Date.Add(endHour);
 
-            var consultationTime = new TimeInterval(startDate, endDate);
+            consultationTime = new TimeInterval(startDate, endDate);
             if (agenda.DoesConsultationTimeOverlaps(consultationTime))
             {
                 Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");
