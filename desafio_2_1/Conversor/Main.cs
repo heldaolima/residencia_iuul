@@ -1,10 +1,6 @@
 ﻿namespace Conversor;
 
-using Conversor.Validation;
-using Conversor.Validation.InputParsers;
-using Conversor.Validation.Validators;
 using Conversor.Application;
-using Conversor.Domain.Entities;
 
 public class Program
 {
@@ -24,28 +20,9 @@ public class Program
 
         while (true)
         {
-            String originCurrency = UserInputHandler.Handle(
-                "Moeda origem: ",
-                new StringParser(),
-                new CurrencyValidator()
-                );
-
-            if (originCurrency == "")
+            var pair = InputReader.Run();
+            if (pair is null)
                 break;
-
-            String destinyCurrency = UserInputHandler.Handle(
-                "Moeda destino: ",
-                new StringParser(),
-                new DestinyCurrencyValidator(originCurrency)
-                );
-
-            double value = UserInputHandler.Handle(
-                "Valor: ",
-                new DoubleParser(),
-               new ValueValidator()
-                );
-
-            var pair = new ConversionPair(originCurrency, destinyCurrency, value);
 
             Console.WriteLine();
             Console.WriteLine("Convertendo...");
