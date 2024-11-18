@@ -1,7 +1,7 @@
 namespace Conversor.Infra.Request;
 
 using Infra.Env;
-using System.Text.Json;
+using Infra.Json;
 
 public class RequestHandler
 {
@@ -35,35 +35,18 @@ public class RequestHandler
       }
 
       var data = await response.Content.ReadAsStringAsync();
-      var (rate, success) = ExtractConversionRate(data);
+      double rate;
+      var success = new JsonFieldExtractor(data).GetFieldDouble("conversion_rate", out rate);
       if (!success)
-        return (0, "Erro ao extrair a taxa de conversão.");
+      {
+        return (0, "Erro ao extrair a taxa de conversão da resposta.");
+      }
+
       return (rate, null);
     }
     catch (Exception)
     {
       return (0, "Erro interno do servidor.");
-    }
-  }
-
-  private (double, bool) ExtractConversionRate(string content)
-  {
-    try
-    {
-      var jsonDoc = JsonDocument.Parse(content);
-      var root = jsonDoc.RootElement;
-      if (root.TryGetProperty("conversion_rate", out JsonElement rateElement))
-      {
-        return (rateElement.GetDouble(), true);
-      }
-      else
-      {
-        return (0, false);
-      }
-    }
-    catch (JsonException)
-    {
-      return (0, false);
     }
   }
 }
