@@ -9,7 +9,7 @@ public class CurrencyValidator : Validator<String>
       return "Erro: não pode haver dígitos no código da moeda.";
     }
 
-    if (value.Length != 3)
+    if (value.Length > 0 && value.Length != 3)
       return "Erro: a moeda deve ter exatamente três caracteres.";
 
     return null;

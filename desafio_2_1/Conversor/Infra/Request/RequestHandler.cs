@@ -31,8 +31,7 @@ public class RequestHandler
       var response = await client.GetAsync($"{origin}/{destiny}");
       if (!response.IsSuccessStatusCode)
       {
-        Console.WriteLine($"Erro {response.StatusCode} ao realizar requisição");
-        return (0, $"Erro de requisição [código {response.StatusCode}]");
+        return (0, $"Erro de requisição [{response.StatusCode}]. Verifique a entrada e tente novamente.");
       }
 
       var data = await response.Content.ReadAsStringAsync();
@@ -43,7 +42,7 @@ public class RequestHandler
     }
     catch (Exception)
     {
-      return (0, "Erro ao conectar-se com o servidor.");
+      return (0, "Erro interno do servidor.");
     }
   }
 
