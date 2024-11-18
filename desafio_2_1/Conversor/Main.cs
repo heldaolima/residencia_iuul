@@ -6,7 +6,6 @@ public class Program
 {
     public async static Task<int> Main()
     {
-
         CurrencyConversor conversor;
         try
         {
@@ -28,6 +27,7 @@ public class Program
             Console.WriteLine("Convertendo...");
             var (result, error) = await conversor.Convert(pair);
             Console.WriteLine();
+
             if (error is not null)
             {
                 Console.WriteLine(error);
