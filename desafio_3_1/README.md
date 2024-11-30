@@ -5,9 +5,17 @@
 - `Application/Actions/`: é onde ficam as operações do sistema que envolvam leitura/criação de dados. Uma `Action` normalmente lê e valida dados do usuário e depois escreve/lê dados no armazenamento. Elas estão divididas em:
     - `Application/ConsultationActions/`: envolvem agendamento de consulta 
     - `Application/PatientActions/`: envolvem registro de pacientes.
+- `Application/Session`: Responsável por inicializar as sessões necessárias com o banco de dados.
+    - `Application/Session/DBSession`: inicializa a sessão do Banco
+    - `Application/Session/AppSesssion`: inicializa os objetos necessários para a aplicação (no caso, os repositórios)
+- `Application/RequestsHandler`: recebe uma sessão e processa as entradas do usuário
 - `Domain`: armazena as entidades e repositórios do sistema, conforme o negócio Consultório Odontológico. 
     - `Domain/Entities/`: é onde estão definidos `Patient` e `Consultation`. 
     - `Domain/Repositories/`: `Agenda` é uma classe Singleton que gerencia a lista de consultas; semelhantemente, `Registration` é um Singleton que gerencia o registro de Pacientes.
+- `Infra`: lida com a comunicação direta com a base de dados e outras formas de armazenamento.
+    - `Infra/Env/EnvHandler`: abstração para leitura dos dados armazenados no `.env`
+    - `Infra/Db/DbContext`: inicializa o Contexto EF Code
+    - `Infra/Db/Repositories`: guarda os repositórios de `Patient` e `Consultation`
 - `Presentation/Menus/NavigationMenus/`: camada de apresentação com os menus de navegação do sistema. Esses menus não geram efeitos colaterais nem fazem leitura dos dados; sua função é dirigir o usuário para outro menu ou iniciar uma Ação.
 - `Utils/`: entidades e funções utilitárias. `PrintPatients` é classe responsável por imprimir a listagem de pacientes conforme o layout estabelecido. `TimeInterval` é uma classe que representa intervalos de tempo e é usada na `Consultation`.
 - `Validation/`: Camada de validação do sistema.
