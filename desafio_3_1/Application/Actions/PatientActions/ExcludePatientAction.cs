@@ -1,33 +1,42 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain.Entities;
-using DentalOffice.Validation;
-using DentalOffice.Validation.InputParsers;
-using DentalOffice.Validation.Validators;
+using Domain.Entities;
+using Domain.Interfaces;
+using Validation;
+using Validation.InputParsers;
+using Validation.Validators;
 
 public class DeletePatientAction : Action
 {
-    public static async Task<ActionOptions> Run()
+    private IPatientRepository patientRepository;
+    private IConsultationRepository consultationRepository;
+
+    public DeletePatientAction(IPatientRepository pRepo, IConsultationRepository cRepo)
     {
-        String cpf = UserInputHandler.Handle(
+        patientRepository = pRepo;
+        consultationRepository = cRepo;
+    }
+
+    public async Task<ActionOptions> Run()
+    {
+        String cpf = await UserInputHandler.Handle(
                     "CPF: ",
                     new StringParser(),
-                    new IsPatientRegisteredValidator()
+                    new IsPatientRegisteredValidator(patientRepository)
                     );
 
-        /*var registration = Registration.Get();*/
-        /*var patient = registration.GetPatientByCpf(cpf);*/
-        /*if (patient is null)*/
-        /*    return ActionOptions.ShowPatientsMenu;*/
+        var patient = await patientRepository.GetPatientByCpf(cpf);
+        if (patient is null)
+            return ActionOptions.ShowPatientsMenu;
 
-        /*if (patient.HasFutureConsultation())*/
-        /*    Console.WriteLine("Erro: paciente está agendado.");*/
-        /*else*/
-        /*{*/
-        /*    registration.RemovePatient(patient);*/
-        /*    Agenda.Get().RemovePatient(patient);*/
-        /*    Console.WriteLine("Paciente excluído com sucesso!");*/
-        /*}*/
+        if (patient.HasFutureConsultation())
+            Console.WriteLine("Erro: paciente está agendado.");
+        else
+        {
+            await consultationRepository.RemovePatient(patient);
+            await patientRepository.RemovePatient(patient);
+            Console.WriteLine("Paciente excluído com sucesso!");
+        }
 
         return ActionOptions.ShowPatientsMenu;
     }

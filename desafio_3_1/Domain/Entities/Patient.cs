@@ -30,12 +30,12 @@ public class Patient
     return age;
   }
 
-  /*public bool HasFutureConsultation() => Consultation is not null;*/
+  public bool HasFutureConsultation() => true;
 
   public void AddConsultation(Consultation c) => consultations.Add(c);
-  /*public bool IsTheSameConsultation(DateTime startDate) =>*/
-  /*  Consultation?.TimeSchedule.Start == startDate;*/
-  /**/
+
+  public Consultation? GetFutureConsultationIfItStartsOnDate(DateTime startDate) => null;
+
   public void RemoveConsultation(Consultation c) => consultations.Remove(c);
 
   public override String ToString() =>

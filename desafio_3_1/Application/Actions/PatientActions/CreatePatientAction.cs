@@ -1,33 +1,41 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain.Entities;
-using DentalOffice.Validation.Validators;
-using DentalOffice.Validation.InputParsers;
-using DentalOffice.Validation;
+using Domain.Interfaces;
+using Domain.Entities;
+using Validation.Validators;
+using Validation.InputParsers;
+using Validation;
 
 public class CreatePatientAction : Action
 {
-    public static async Task<ActionOptions> Run()
+    private IPatientRepository patientRepository;
+
+    public CreatePatientAction(IPatientRepository pRepo)
     {
-        String cpf = UserInputHandler.Handle(
+        patientRepository = pRepo;
+    }
+
+    public async Task<ActionOptions> Run()
+    {
+        String cpf = await UserInputHandler.Handle(
                     "CPF: ",
                     new StringParser(),
-                    new DoubleCpfValidator()
+                    new DoubleCpfValidator(patientRepository)
                     );
 
-        String name = UserInputHandler.Handle(
+        String name = await UserInputHandler.Handle(
             "Nome: ",
             new StringParser(),
             new NameValidator()
           );
 
-        DateTime birthDate = UserInputHandler.Handle(
+        DateTime birthDate = await UserInputHandler.Handle(
             "Data de nascimento [DDMMAAAA]: ",
             new DateTimeParser(),
             new BirthDateValidator()
           );
 
-        /*Registration.Get().AddPatient(new Patient(name, cpf, birthDate));*/
+        await patientRepository.AddPatient(new Patient(name, cpf, birthDate));
 
         Console.WriteLine("Paciente cadastrado com sucesso!");
 

@@ -1,6 +1,6 @@
 namespace DentalOffice.Application.Actions;
 
-interface Action
+public interface Action
 {
-  public abstract static Task<ActionOptions> Run();
+  public abstract Task<ActionOptions> Run();
 }

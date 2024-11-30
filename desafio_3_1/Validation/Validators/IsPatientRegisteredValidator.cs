@@ -1,18 +1,26 @@
 namespace DentalOffice.Validation.Validators;
 
-using DentalOffice.Domain;
+using Domain.Interfaces;
+using Domain.Entities;
 
 public class IsPatientRegisteredValidator : Validator<String>
 {
-  public String? Validate(String cpf)
+  private readonly IPatientRepository repository;
+
+  public IsPatientRegisteredValidator(IPatientRepository repo)
   {
-    String? cpfError = new CPFValidator().Validate(cpf);
+    repository = repo;
+  }
+
+  public async Task<String?> Validate(String cpf)
+  {
+    String? cpfError = await new CPFValidator().Validate(cpf);
     if (cpfError is not null)
       return cpfError;
 
-    /*var patient = Registration.Get().GetPatientByCpf(cpf);*/
-    /*if (patient is null)*/
-    /*  return "Erro: paciente não cadastrado.";*/
+    var patient = repository.GetPatientByCpf(cpf);
+    if (patient is null)
+      return "Erro: paciente não cadastrado.";
 
     return null;
   }

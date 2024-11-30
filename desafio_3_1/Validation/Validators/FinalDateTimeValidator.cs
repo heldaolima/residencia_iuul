@@ -8,10 +8,10 @@ public class FinalDateTimeValidator : Validator<DateTime>
     this.initial = initial;
   }
 
-  public String? Validate(DateTime value)
+  public Task<String?> Validate(DateTime value)
   {
     if (value < initial)
-      return "Erro: a data final não pode ser anterior à inicial.";
-    return null;
+      return Task.FromResult<string?>("Erro: a data final não pode ser anterior à inicial.");
+    return Task.FromResult<string?>(null);
   }
 }

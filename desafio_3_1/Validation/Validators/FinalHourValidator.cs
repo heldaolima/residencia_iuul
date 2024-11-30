@@ -10,17 +10,17 @@ public class FinalHourValidator : Validator<TimeSpan>
     this.start = start;
   }
 
-  public String? Validate(TimeSpan value)
+  public Task<String?> Validate(TimeSpan value)
   {
     if (value <= start)
-      return "Erro: A hora final não pode ser antes da inicial.";
+      return Task.FromResult<string?>("Erro: A hora final não pode ser antes da inicial.");
 
     if (value > limit)
-      return "Erro: a consulta ultrapassa o horário de funcionamento do consultório (até às 19h00).";
+      return Task.FromResult<string?>("Erro: a consulta ultrapassa o horário de funcionamento do consultório (até às 19h00).");
 
     if (value.Minutes % 15 != 0)
-      return "Erro: horários de consulta devem ser definidos de 15 em 15 minutos.";
+      return Task.FromResult<string?>("Erro: horários de consulta devem ser definidos de 15 em 15 minutos.");
 
-    return null;
+    return Task.FromResult<string?>(null);
   }
 }

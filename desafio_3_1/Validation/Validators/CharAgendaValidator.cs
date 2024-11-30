@@ -2,11 +2,11 @@ namespace DentalOffice.Validation.Validators;
 
 public class CharAgendaValidator : Validator<char>
 {
-  public String? Validate(char value)
+  public Task<String?> Validate(char value)
   {
     if (value == 'T' || value == 'P')
-      return null;
+      return Task.FromResult<string?>(null);
 
-    return "Erro: Opção inválida";
+    return Task.FromResult<string?>("Erro: Opção inválida");
   }
 }

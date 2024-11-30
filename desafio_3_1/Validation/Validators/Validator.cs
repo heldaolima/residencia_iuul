@@ -2,5 +2,5 @@ namespace DentalOffice.Validation.Validators;
 
 public interface Validator<T>
 {
-  public abstract String? Validate(T value);
+  Task<String?> Validate(T value);
 }

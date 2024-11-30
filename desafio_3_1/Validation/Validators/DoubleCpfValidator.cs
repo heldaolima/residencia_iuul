@@ -1,17 +1,25 @@
 namespace DentalOffice.Validation.Validators;
 
-using DentalOffice.Domain;
+using Domain.Entities;
+using Domain.Interfaces;
 
 public class DoubleCpfValidator : Validator<String>
 {
-  public String? Validate(String cpf)
+  private readonly IPatientRepository repository;
+
+  public DoubleCpfValidator(IPatientRepository repo)
   {
-    String? cpfError = new CPFValidator().Validate(cpf);
+    repository = repo;
+  }
+
+  public async Task<String?> Validate(String cpf)
+  {
+    String? cpfError = await new CPFValidator().Validate(cpf);
     if (cpfError is not null)
       return cpfError;
 
-    /*if (Registration.Get().IsCpfRegistered(cpf))*/
-    /*  return "Erro: CPF já cadastrado.";*/
+    if (await repository.IsCpfRegistered(cpf))
+      return "Erro: CPF já cadastrado.";
 
     return null;
   }

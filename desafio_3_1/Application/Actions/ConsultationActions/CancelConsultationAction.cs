@@ -1,42 +1,50 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain.Entities;
-using DentalOffice.Validation;
-using DentalOffice.Validation.InputParsers;
-using DentalOffice.Validation.Validators;
+using Domain.Interfaces;
+using Validation;
+using Validation.InputParsers;
+using Validation.Validators;
 
 public class CancelConsultationAction : Action
 {
-    public static async Task<ActionOptions> Run()
+    private IPatientRepository patientRepository;
+    private IConsultationRepository consultationRepository;
+
+    public CancelConsultationAction(IPatientRepository pRepo, IConsultationRepository cRepo)
     {
-        String cpf = UserInputHandler.Handle(
+        patientRepository = pRepo;
+        consultationRepository = cRepo;
+    }
+
+    public async Task<ActionOptions> Run()
+    {
+        String cpf = await UserInputHandler.Handle(
                 "CPF: ",
                 new StringParser(),
-                new IsPatientRegisteredValidator()
+                new IsPatientRegisteredValidator(patientRepository)
                 );
 
-        /*var registration = Registration.Get();*/
-        /*var patient = registration.GetPatientByCpf(cpf);*/
-        /*if (patient is null)*/
-        /*    return ActionOptions.ShowConsultationMenu;*/
+        var patient = await patientRepository.GetPatientByCpf(cpf);
+        if (patient is null)
+            return ActionOptions.ShowConsultationMenu;
 
-        /*if (!patient.HasFutureConsultation())*/
-        /*{*/
-        /*    Console.WriteLine("Erro: o paciente não tem consulta agendada.");*/
-        /*    return ActionOptions.ShowConsultationMenu;*/
-        /*}*/
+        if (!patient.HasFutureConsultation())
+        {
+            Console.WriteLine("Erro: o paciente não tem consulta agendada.");
+            return ActionOptions.ShowConsultationMenu;
+        }
 
         DateTime startDate;
 
         while (true)
         {
-            DateTime baseDate = UserInputHandler.Handle(
+            DateTime baseDate = await UserInputHandler.Handle(
                     "Data da consulta [DDMMAAAA]: ",
                     new DateTimeParser(),
                     new ConsultationDateTimeValidator()
                     );
 
-            TimeSpan startHour = UserInputHandler.Handle(
+            TimeSpan startHour = await UserInputHandler.Handle(
                     "Hora inicial [HHMM]: ",
                     new HourOfTheDayParser(),
                     new StartHourValidator(baseDate)
@@ -51,13 +59,14 @@ public class CancelConsultationAction : Action
             break;
         }
 
-        /*if (patient.IsTheSameConsultation(startDate) && patient.Consultation is not null)*/
-        /*{*/
-        /*    Agenda.Get().RemoveConsultation(patient.Consultation);*/
-        /*    Console.WriteLine("Agendamento cancelado com sucesso!");*/
-        /*}*/
-        /*else*/
-        /*    Console.WriteLine("Erro: agendamento não encontrado.");*/
+        var consultation = patient.GetFutureConsultationIfItStartsOnDate(startDate);
+        if (consultation is not null)
+        {
+            await consultationRepository.RemoveConsultation(consultation);
+            Console.WriteLine("Agendamento cancelado com sucesso!");
+        }
+        else
+            Console.WriteLine("Erro: agendamento não encontrado.");
 
         return ActionOptions.ShowConsultationMenu;
     }

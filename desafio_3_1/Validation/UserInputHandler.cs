@@ -5,7 +5,7 @@ using DentalOffice.Validation.Validators;
 
 public class UserInputHandler
 {
-  public static T Handle<T>(String msg, InputParser<T> parser, Validator<T> validator)
+  public static async Task<T> Handle<T>(String msg, InputParser<T> parser, Validator<T> validator)
   {
     while (true)
     {
@@ -21,7 +21,7 @@ public class UserInputHandler
         continue;
       }
 
-      var validationError = validator.Validate(value);
+      var validationError = await validator.Validate(value);
       if (validationError is not null)
       {
         Console.WriteLine(validationError);

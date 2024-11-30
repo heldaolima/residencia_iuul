@@ -1,6 +1,5 @@
 namespace DentalOffice.Utils;
 
-using System.Collections.ObjectModel;
 using DentalOffice.Domain.Entities;
 
 public class PatientsPrinter
@@ -8,7 +7,7 @@ public class PatientsPrinter
   private static void PrintDelimiter() =>
     Console.WriteLine("-------------------------------------------------------------------");
 
-  public static void Print(ReadOnlyCollection<Patient> patients)
+  public static void Print(List<Patient> patients)
   {
     PrintDelimiter();
     Console.WriteLine(" CPF             Nome                          Dt.Nasc.     Idade ");

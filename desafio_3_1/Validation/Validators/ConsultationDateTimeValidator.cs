@@ -3,10 +3,10 @@ namespace DentalOffice.Validation.Validators;
 
 public class ConsultationDateTimeValidator : Validator<DateTime>
 {
-  public String? Validate(DateTime value)
+  public Task<String?> Validate(DateTime value)
   {
     if (value < DateTime.Today)
-      return "Erro: a data não pode ser no passado.";
-    return null;
+      return Task.FromResult<string?>("Erro: a data não pode ser no passado.");
+    return Task.FromResult<string?>(null);
   }
 }

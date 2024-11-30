@@ -1,45 +1,53 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain.Entities;
+using Domain.Entities;
+using Domain.Interfaces;
 
-using DentalOffice.Validation;
-using DentalOffice.Validation.Validators;
-using DentalOffice.Validation.InputParsers;
+using Validation;
+using Validation.Validators;
+using Validation.InputParsers;
 
 public class CreateConsultationAction : Action
 {
-    public static async Task<ActionOptions> Run()
+    private IPatientRepository patientRepository;
+    private IConsultationRepository consultationRepository;
+
+    public CreateConsultationAction(IPatientRepository pRepo, IConsultationRepository cRepo)
     {
-        String cpf = UserInputHandler.Handle(
+        patientRepository = pRepo;
+        consultationRepository = cRepo;
+    }
+
+    public async Task<ActionOptions> Run()
+    {
+        String cpf = await UserInputHandler.Handle(
                 "CPF: ",
                 new StringParser(),
-                new IsPatientRegisteredValidator()
+                new IsPatientRegisteredValidator(patientRepository)
                 );
 
-        /*var registration = Registration.Get();*/
-        /*var agenda = Agenda.Get();*/
 
-        /*var patient = registration.GetPatientByCpf(cpf);*/
-        /*if (patient is null)*/
-        /*    return ActionOptions.ShowConsultationMenu;*/
+        var patient = await patientRepository.GetPatientByCpf(cpf);
+        if (patient is null)
+            return ActionOptions.ShowConsultationMenu;
 
-        /*if (patient.HasFutureConsultation())*/
-        /*{*/
-        /*    Console.WriteLine("Erro: paciente está agendado.");*/
-        /*    return ActionOptions.ShowConsultationMenu;*/
-        /*}*/
+        if (patient.HasFutureConsultation())
+        {
+            Console.WriteLine("Erro: paciente está agendado.");
+            return ActionOptions.ShowConsultationMenu;
+        }
 
         DateTime startDate, endDate;
         TimeInterval consultationTime;
         while (true)
         {
-            DateTime baseDate = UserInputHandler.Handle(
+            DateTime baseDate = await UserInputHandler.Handle(
                     "Data da consulta [DDMMAAAA]: ",
                     new DateTimeParser(),
                     new ConsultationDateTimeValidator()
                     );
 
-            TimeSpan startHour = UserInputHandler.Handle(
+            TimeSpan startHour = await UserInputHandler.Handle(
                     "Hora inicial [HHMM]: ",
                     new HourOfTheDayParser(),
                     new StartHourValidator(baseDate)
@@ -52,7 +60,7 @@ public class CreateConsultationAction : Action
                 continue;
             }
 
-            TimeSpan endHour = UserInputHandler.Handle(
+            TimeSpan endHour = await UserInputHandler.Handle(
                     "Hora final [HHMM]: ",
                     new HourOfTheDayParser(),
                     new FinalHourValidator(startHour)
@@ -61,15 +69,15 @@ public class CreateConsultationAction : Action
             endDate = baseDate.Date.Add(endHour);
 
             consultationTime = new TimeInterval(startDate, endDate);
-            /*if (agenda.DoesConsultationTimeOverlaps(consultationTime))*/
-            /*{*/
-            /*    Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");*/
-            /*    continue;*/
-            /*}*/
+            if (await consultationRepository.DoesConsultationTimeOverlaps(consultationTime))
+            {
+                Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");
+                continue;
+            }
             break;
         }
 
-        /*agenda.AddConsultation(new Consultation(patient, consultationTime));*/
+        await consultationRepository.AddConsultation(new Consultation(patient, consultationTime));
 
         Console.WriteLine("Consulta agendada com sucesso!");
 

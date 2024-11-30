@@ -1,15 +1,22 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain.Entities;
-using DentalOffice.Utils;
+using Domain.Interfaces;
+using Utils;
 
 public class ListPatientsByNameAction : Action
 {
-    public static async Task<ActionOptions> Run()
+    private IPatientRepository patientRepository;
+
+    public ListPatientsByNameAction(IPatientRepository pRepo)
     {
-        /*var patients = Registration.Get().GetOrderedByName();*/
-        /**/
-        /*PatientsPrinter.Print(patients);*/
+        patientRepository = pRepo;
+    }
+
+    public async Task<ActionOptions> Run()
+    {
+        var patients = await patientRepository.GetOrderedByName();
+
+        PatientsPrinter.Print(patients);
         return ActionOptions.ShowPatientsMenu;
     }
 }

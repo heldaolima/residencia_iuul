@@ -1,18 +1,28 @@
 namespace DentalOffice.Validation.Validators;
 
-using DentalOffice.Domain;
+using Domain.Interfaces;
+using Domain.Entities;
 
 public class PatientForConsultationValidator : Validator<String>
 {
-  public String? Validate(String cpf)
+  private readonly IPatientRepository repository;
+
+  public PatientForConsultationValidator(IPatientRepository repo)
   {
-    String? patientError = new IsPatientRegisteredValidator().Validate(cpf);
+    repository = repo;
+  }
+
+  public async Task<String?> Validate(String cpf)
+  {
+    String? patientError = await new IsPatientRegisteredValidator(repository).Validate(cpf);
     if (patientError is not null)
       return patientError;
 
-    /*var patient = Registration.Get().GetPatientByCpf(cpf);*/
-    /*if (patient is not null && patient.HasFutureConsultation())*/
-    /*  return "Erro: o paciente já está agendado.";*/
+    var patient = repository.GetPatientByCpf(cpf);
+    if (patient is not null)
+      // TODO: implement the HasFutureConsultation method
+      /*&& patient.HasFutureConsultation())*/
+      return "Erro: o paciente já está agendado.";
 
     return null;
   }

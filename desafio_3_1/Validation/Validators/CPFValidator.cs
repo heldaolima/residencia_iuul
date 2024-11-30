@@ -11,14 +11,14 @@ public class CPFValidator : Validator<String>
     return verifier == 11 - remainder;
   }
 
-  public String? Validate(String value)
+  public Task<String?> Validate(String value)
   {
     if (
         value.Length != 11 ||
         value.Distinct().Count() == 1 ||
         !value.All((c) => char.IsDigit(c))
       )
-      return invalidCpfError;
+      return Task.FromResult<string?>(invalidCpfError);
 
     int[] cpfNums = value.Select((c) => int.Parse(c.ToString())).ToArray();
 
@@ -35,7 +35,7 @@ public class CPFValidator : Validator<String>
 
     int remainder = sum % 11;
     if (!IsVerifierValid(firstVerifier, remainder))
-      return invalidCpfError;
+      return Task.FromResult<string?>(invalidCpfError);
 
     mult = 11;
     sum = 0;
@@ -47,8 +47,8 @@ public class CPFValidator : Validator<String>
 
     remainder = sum % 11;
     if (!IsVerifierValid(secondVerifier, remainder))
-      return invalidCpfError;
+      return Task.FromResult<string?>(invalidCpfError);
 
-    return null;
+    return Task.FromResult<string?>(null);
   }
 }
