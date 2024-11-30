@@ -30,11 +30,16 @@ public class Patient
     return age;
   }
 
-  public bool HasFutureConsultation() => true;
+  public bool HasFutureConsultation() =>
+    consultations.Any(c => c.TimeSchedule.Start > DateTime.Now);
 
   public void AddConsultation(Consultation c) => consultations.Add(c);
 
-  public Consultation? GetFutureConsultationIfItStartsOnDate(DateTime startDate) => null;
+  public Consultation? GetFutureConsultationIfItStartsOnDate(DateTime startDate) =>
+     consultations.FirstOrDefault(c => c.TimeSchedule.Start == startDate);
+
+  public Consultation? GetFutureConsultation() =>
+    consultations.FirstOrDefault(c => c.TimeSchedule.Start > DateTime.Now);
 
   public void RemoveConsultation(Consultation c) => consultations.Remove(c);
 

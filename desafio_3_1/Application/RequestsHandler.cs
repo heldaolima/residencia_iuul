@@ -40,6 +40,8 @@ public class RequestsHandler
   public async Task<ActionOptions> ExecuteRequest(ActionOptions request)
   {
     var action = ActionSwitcher.GetAction(request, Session);
-    return await action.Run();
+    if (action is not null)
+      return await action.Run();
+    return request;
   }
 }

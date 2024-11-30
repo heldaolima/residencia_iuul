@@ -30,8 +30,12 @@ public class ConsultationRepository : IConsultationRepository
     await context.SaveChangesAsync();
   }
 
-  public async Task<bool> DoesConsultationTimeOverlaps(TimeInterval newInterval) =>
-      await context.Consultations.AnyAsync(c => c.TimeSchedule.Overlaps(newInterval));
+  public async Task<bool> DoesConsultationTimeOverlaps(TimeInterval newInterval)
+  {
+    var consultations = await context.Consultations.ToListAsync();
+
+    return consultations.Any(c => c.TimeSchedule.Overlaps(newInterval));
+  }
 
   public async Task RemovePatient(Patient p)
   {

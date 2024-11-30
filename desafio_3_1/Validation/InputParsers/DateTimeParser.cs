@@ -11,7 +11,7 @@ public class DateTimeParser : InputParser<DateTime>
       DateTime date =
         DateTime.ParseExact(value, "ddMMyyyy", new CultureInfo("pt-BR"));
 
-      return (date, true);
+      return (date.ToUniversalTime(), true);
     }
     catch (FormatException)
     {

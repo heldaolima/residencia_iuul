@@ -5,7 +5,7 @@ using Application;
 
 public class ActionSwitcher
 {
-  public static Action GetAction(ActionOptions request, AppSession session)
+  public static Action? GetAction(ActionOptions request, AppSession session)
   {
     return request switch
     {
@@ -16,6 +16,7 @@ public class ActionSwitcher
       ActionOptions.GoToCreateConsultationAction => new CreateConsultationAction(session.PatientRepository, session.ConsultationRepository),
       ActionOptions.GoToCancelConsultationAction => new CancelConsultationAction(session.PatientRepository, session.ConsultationRepository),
       ActionOptions.GoToListConsultationsAction => new ListConsultationsAction(session.ConsultationRepository),
+      _ => null,
     };
 
   }

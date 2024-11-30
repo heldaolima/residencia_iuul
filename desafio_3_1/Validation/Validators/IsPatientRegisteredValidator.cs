@@ -18,7 +18,7 @@ public class IsPatientRegisteredValidator : Validator<String>
     if (cpfError is not null)
       return cpfError;
 
-    var patient = repository.GetPatientByCpf(cpf);
+    var patient = await repository.GetPatientByCpf(cpf);
     if (patient is null)
       return "Erro: paciente não cadastrado.";
 
