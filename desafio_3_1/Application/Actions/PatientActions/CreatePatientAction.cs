@@ -1,13 +1,13 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain;
+using DentalOffice.Domain.Entities;
 using DentalOffice.Validation.Validators;
 using DentalOffice.Validation.InputParsers;
 using DentalOffice.Validation;
 
 public class CreatePatientAction : Action
 {
-    public static ActionOptions Run()
+    public static async Task<ActionOptions> Run()
     {
         String cpf = UserInputHandler.Handle(
                     "CPF: ",
@@ -27,7 +27,7 @@ public class CreatePatientAction : Action
             new BirthDateValidator()
           );
 
-        Registration.Get().AddPatient(new Patient(name, cpf, birthDate));
+        /*Registration.Get().AddPatient(new Patient(name, cpf, birthDate));*/
 
         Console.WriteLine("Paciente cadastrado com sucesso!");
 

@@ -2,5 +2,5 @@ namespace DentalOffice.Application.Actions;
 
 interface Action
 {
-  public abstract static ActionOptions Run();
+  public abstract static Task<ActionOptions> Run();
 }

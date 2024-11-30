@@ -10,9 +10,9 @@ public class IsPatientRegisteredValidator : Validator<String>
     if (cpfError is not null)
       return cpfError;
 
-    var patient = Registration.Get().GetPatientByCpf(cpf);
-    if (patient is null)
-      return "Erro: paciente não cadastrado.";
+    /*var patient = Registration.Get().GetPatientByCpf(cpf);*/
+    /*if (patient is null)*/
+    /*  return "Erro: paciente não cadastrado.";*/
 
     return null;
   }

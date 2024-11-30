@@ -10,8 +10,8 @@ public class DoubleCpfValidator : Validator<String>
     if (cpfError is not null)
       return cpfError;
 
-    if (Registration.Get().IsCpfRegistered(cpf))
-      return "Erro: CPF já cadastrado.";
+    /*if (Registration.Get().IsCpfRegistered(cpf))*/
+    /*  return "Erro: CPF já cadastrado.";*/
 
     return null;
   }

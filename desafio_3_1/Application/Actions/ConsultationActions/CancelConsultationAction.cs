@@ -1,13 +1,13 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain;
+using DentalOffice.Domain.Entities;
 using DentalOffice.Validation;
 using DentalOffice.Validation.InputParsers;
 using DentalOffice.Validation.Validators;
 
 public class CancelConsultationAction : Action
 {
-    public static ActionOptions Run()
+    public static async Task<ActionOptions> Run()
     {
         String cpf = UserInputHandler.Handle(
                 "CPF: ",
@@ -15,10 +15,10 @@ public class CancelConsultationAction : Action
                 new IsPatientRegisteredValidator()
                 );
 
-        var registration = Registration.Get();
-        var patient = registration.GetPatientByCpf(cpf);
-        if (patient is null)
-            return ActionOptions.ShowConsultationMenu;
+        /*var registration = Registration.Get();*/
+        /*var patient = registration.GetPatientByCpf(cpf);*/
+        /*if (patient is null)*/
+        /*    return ActionOptions.ShowConsultationMenu;*/
 
         /*if (!patient.HasFutureConsultation())*/
         /*{*/

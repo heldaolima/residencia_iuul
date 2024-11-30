@@ -5,7 +5,7 @@ using DentalOffice.Application.Actions;
 
 class App
 {
-  public static void Main()
+  public static async Task Main()
   {
     var mainMenu = new MainMenu();
     var patientRegistrationMenu = new PatientRegistrationMenu();
@@ -33,13 +33,13 @@ class App
 
       action = action switch
       {
-        ActionOptions.GoToRegisterPatientAction => CreatePatientAction.Run(),
-        ActionOptions.GoToExcludePatientAction => DeletePatientAction.Run(),
-        ActionOptions.GoToListPatientsByCpfAction => ListPatientsByCpfAction.Run(),
-        ActionOptions.GoToListPatientsByNameAction => ListPatientsByNameAction.Run(),
-        ActionOptions.GoToCreateConsultationAction => CreateConsultationAction.Run(),
-        ActionOptions.GoToCancelConsultationAction => CancelConsultationAction.Run(),
-        ActionOptions.GoToListConsultationsAction => ListConsultationsAction.Run(),
+        ActionOptions.GoToRegisterPatientAction => await CreatePatientAction.Run(),
+        ActionOptions.GoToExcludePatientAction => await DeletePatientAction.Run(),
+        ActionOptions.GoToListPatientsByCpfAction => await ListPatientsByCpfAction.Run(),
+        ActionOptions.GoToListPatientsByNameAction => await ListPatientsByNameAction.Run(),
+        ActionOptions.GoToCreateConsultationAction => await CreateConsultationAction.Run(),
+        ActionOptions.GoToCancelConsultationAction => await CancelConsultationAction.Run(),
+        ActionOptions.GoToListConsultationsAction => await ListConsultationsAction.Run(),
 
         _ => action
       };

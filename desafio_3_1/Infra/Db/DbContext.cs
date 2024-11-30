@@ -1,6 +1,6 @@
 namespace DentalOffice.Infra.DB;
 
-using DentalOffice.Domain;
+using DentalOffice.Domain.Entities;
 using Env;
 using Microsoft.EntityFrameworkCore;
 

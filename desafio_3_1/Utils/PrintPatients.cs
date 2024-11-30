@@ -1,7 +1,7 @@
 namespace DentalOffice.Utils;
 
 using System.Collections.ObjectModel;
-using DentalOffice.Domain;
+using DentalOffice.Domain.Entities;
 
 public class PatientsPrinter
 {

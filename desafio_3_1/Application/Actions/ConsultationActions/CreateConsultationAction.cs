@@ -1,7 +1,6 @@
 namespace DentalOffice.Application.Actions;
 
-using DentalOffice.Domain;
-using DentalOffice.Utils;
+using DentalOffice.Domain.Entities;
 
 using DentalOffice.Validation;
 using DentalOffice.Validation.Validators;
@@ -9,7 +8,7 @@ using DentalOffice.Validation.InputParsers;
 
 public class CreateConsultationAction : Action
 {
-    public static ActionOptions Run()
+    public static async Task<ActionOptions> Run()
     {
         String cpf = UserInputHandler.Handle(
                 "CPF: ",
@@ -17,12 +16,12 @@ public class CreateConsultationAction : Action
                 new IsPatientRegisteredValidator()
                 );
 
-        var registration = Registration.Get();
-        var agenda = Agenda.Get();
+        /*var registration = Registration.Get();*/
+        /*var agenda = Agenda.Get();*/
 
-        var patient = registration.GetPatientByCpf(cpf);
-        if (patient is null)
-            return ActionOptions.ShowConsultationMenu;
+        /*var patient = registration.GetPatientByCpf(cpf);*/
+        /*if (patient is null)*/
+        /*    return ActionOptions.ShowConsultationMenu;*/
 
         /*if (patient.HasFutureConsultation())*/
         /*{*/
@@ -62,15 +61,15 @@ public class CreateConsultationAction : Action
             endDate = baseDate.Date.Add(endHour);
 
             consultationTime = new TimeInterval(startDate, endDate);
-            if (agenda.DoesConsultationTimeOverlaps(consultationTime))
-            {
-                Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");
-                continue;
-            }
+            /*if (agenda.DoesConsultationTimeOverlaps(consultationTime))*/
+            /*{*/
+            /*    Console.WriteLine("Erro: já existe uma consulta agendada para este horário.");*/
+            /*    continue;*/
+            /*}*/
             break;
         }
 
-        agenda.AddConsultation(new Consultation(patient, consultationTime));
+        /*agenda.AddConsultation(new Consultation(patient, consultationTime));*/
 
         Console.WriteLine("Consulta agendada com sucesso!");
 
