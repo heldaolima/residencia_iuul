@@ -41,7 +41,17 @@ public class RequestsHandler
   {
     var action = ActionSwitcher.GetAction(request, Session);
     if (action is not null)
-      return await action.Run();
+    {
+      try
+      {
+        var response = await action.Run();
+        return response;
+      }
+      catch (Exception)
+      {
+        Console.WriteLine("Erro interno no servidor. Tente novamente.");
+      }
+    }
     return request;
   }
 }
